@@ -5,7 +5,6 @@ import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import Cart from "./routes/Cart";
 import Login from "./routes/Login";
-import Signup from "./routes/Signup";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import "./App.css";
 
@@ -25,8 +24,7 @@ function App() {
       <DarkModeProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path=":loginOrSignup" element={<Login />} />
             <Route path="/" element={<Base userType="customer" />}>
               <Route index element={<Home userType="customer" />} />
               <Route
