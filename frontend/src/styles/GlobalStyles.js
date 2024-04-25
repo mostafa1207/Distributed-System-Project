@@ -31,6 +31,10 @@ const GlobalStyles = createGlobalStyle`
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
 
+  --color-peach: #FBE1D9;
+  --color-violet: #C4B0FF;
+  --invert: brightness(0) saturate(100%) invert(18%) sepia(13%) saturate(1701%) hue-rotate(199deg) brightness(91%) contrast(82%);
+
   --backdrop-color: rgba(255, 255, 255, 0.1);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -69,6 +73,10 @@ const GlobalStyles = createGlobalStyle`
 --color-red-100: #fee2e2;
 --color-red-700: #b91c1c;
 --color-red-800: #991b1b;
+
+--color-peach: #611d3a;
+--color-violet: #1d1450;
+--invert: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(1659%) hue-rotate(178deg) brightness(96%) contrast(91%);
 
 --backdrop-color: rgba(0, 0, 0, 0.3);
 
