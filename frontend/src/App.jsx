@@ -1,7 +1,6 @@
 import GlobalStyles from "./styles/GlobalStyles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Base from "./routes/Base";
-import Landing from "./routes/Landing";
 import LoginAndSignup from "./routes/LoginAndSignup";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
