@@ -1,0 +1,28 @@
+.floating-card {
+    box-shadow: -1px -1px 6px 0 var(--color-grey-300), 5px 5px 12px 0 var(--color-grey-300);
+    min-width: 40rem;
+    max-width: 50rem;
+    padding: 3.5rem 3rem;
+    border-radius: 30px;
+    background-color: var(--color-grey-0);
+    font-family: Inter;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3rem;
+    position: sticky;
+
+    & .floating-card-title {
+        padding: 0 1.5rem;
+        font-size: 2.6rem;
+        font-weight: 500;
+        color: var(--color-grey-900);
+    }
+}
+
+.items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
