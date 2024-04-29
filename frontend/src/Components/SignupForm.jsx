@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
+import { API_URL } from "../keys";
 import { useState } from "react";
 
 export default function SignupForm(props) {
@@ -13,7 +14,7 @@ export default function SignupForm(props) {
         for (let entry of form.entries()) {
             user[entry[0]] = entry[1];
         }
-        fetch(`https://distributed-system-project.onrender.com/auth/signup`, {
+        fetch(`${API_URL}/auth/signup`, {
             method: "POST",
             body: JSON.stringify(user),
             headers: {

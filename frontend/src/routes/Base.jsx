@@ -6,6 +6,7 @@ import { FiLogOut } from 'react-icons/fi'
 import { RiAccountCircleLine, RiShoppingCart2Fill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
 import Cookies from "js-cookie"
+import { ProductsProvider } from "./../context/ProductsContext";
 
 export default function Base(props) {
   const nav = useNavigate();
@@ -123,8 +124,10 @@ export default function Base(props) {
             </NavButtonsContainer>
           }
         </Nav>
-
+          <ProductsProvider>
         <Outlet context={props.userType} />
+            
+          </ProductsProvider>
 
         <footer></footer>
       </Body>

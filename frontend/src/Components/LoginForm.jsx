@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
+import { API_URL } from "../keys";
 import { useState } from "react";
 
 export default function LoginForm() {
@@ -13,7 +14,7 @@ export default function LoginForm() {
         for (let entry of form.entries()) {
             user[entry[0]] = entry[1];
         }
-        fetch(`https://distributed-system-project.onrender.com/auth/login`, {
+        fetch(`${API_URL}/auth/login`, {
             method: "POST",
             body: JSON.stringify(user),
             headers: {

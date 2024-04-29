@@ -10,7 +10,7 @@ export const Card = ({
     return (
         <>
             <div className="card-Container">
-                {imgSrc && (<img src={imgSrc} alt="Card Image"></img>)}
+                {imgSrc && (<img src={`../../assets/${imgSrc}`} alt="Card Image"></img>)}
                 <div className="hBox">
                     {itemName && <h5 className="text" id="Itemname">{itemName}</h5>}
                     {price && <h5 className="text" id="price">{price}EGP</h5>}
