@@ -63,7 +63,8 @@ findProduct = async function (productId) {
 };
 
 findProducts = async function () {
-  return await Product.find();
+   const products=await Product.find();
+  return products;
 };
 
 findByEmail = async function (email) {
