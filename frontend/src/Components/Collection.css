@@ -16,8 +16,14 @@
     width: 100%;
 
     & a {
+        display: block;
         width: fit-content;
     }
+}
+.card-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 .options-buttons {
     display: flex;

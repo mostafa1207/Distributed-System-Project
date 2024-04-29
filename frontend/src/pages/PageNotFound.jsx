@@ -1,6 +1,8 @@
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
+import Button from "../Components/Button";
 import Heading from "../ui/Heading";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const StyledPageNotFound = styled.main`
   height: 100vh;
@@ -20,6 +22,9 @@ const Box = styled.div`
   padding: 4.8rem;
   flex: 0 1 96rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   & h1 {
     margin-bottom: 3.2rem;
@@ -27,13 +32,15 @@ const Box = styled.div`
 `;
 
 function PageNotFound() {
+  const navigate = useNavigate();
+
   return (
     <StyledPageNotFound>
       <Box>
         <Heading as="h1">
           The page you are looking for could not be found 😢
         </Heading>
-        <button size="large">&larr; Go back</button>
+        <Button text="Go back" icon={IoMdArrowRoundBack} handler={() => navigate(-1)} color="white" />
       </Box>
     </StyledPageNotFound>
   );

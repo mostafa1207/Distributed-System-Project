@@ -60,6 +60,7 @@ export default function LoginAndSignup(props) {
         & span {
             font-size: 1.5rem;
             color: red;
+            white-space: pre;
         }
     `
 

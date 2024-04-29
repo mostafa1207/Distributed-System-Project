@@ -96,7 +96,7 @@ export default function Base(props) {
       <Body>
         <Nav>
           <div className="logo">
-            <Link to={"/" + route}>LOGO</Link>
+            <Link to={(route == "product") ? "/" : `/${route}`}>LOGO</Link>
           </div>
           <Search onSubmit={handleSearch}>
             <input type="text" 

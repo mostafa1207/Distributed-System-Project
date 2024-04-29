@@ -1,14 +1,18 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { styled, css } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function Button(props) {
+    const nav = useNavigate();
 
     const handler = () => {
-        props.handler();
+        if (props.path) {
+            nav(props.path);
+        } else if (props.handler) {
+            props.handler();
+        }
     }
 
     const Button = styled.button`
-        background-color: ${props.color == "green" ? "var(--color-green)" : "var(--color-orange)"};
         padding: 1.2rem 2rem;
         border-radius: 12px;
         border: none;
@@ -18,19 +22,39 @@ export default function Button(props) {
         align-items: center;
         gap: 1rem;
 
-        &:hover {
-            background-color: ${props.color == "green" ? "var(--color-green-hover)" : "var(--color-orange-hover)"};
-        }
+        ${(props) => {
+            if (props.$color == "green") {
+                return css`
+                    background-color: var(--color-green);
+                    &:hover {
+                        background-color: var(--color-green-hover);
+                    }
+                `;
+            } else if (props.$color == "orange") {
+                return css` 
+                    background-color: var(--color-orange);
+                    &:hover {
+                        background-color: var(--color-orange-hover);
+                    }
+                `;
+            } else {
+                return css`
+                    background-color: var(--color-grey-300);
+                    &:hover {
+                        background-color: var(--color-grey-200);
+                    }
+                `;
+            }
+        }}
+
     `
 
     return (
         <>
-            <Link to={props.path}>
-                <Button onClick={handler}>
-                    <props.icon />
-                    {props.text}
-                </Button>
-            </Link>
+            <Button onClick={handler} $color={props.color}>
+                {props.icon && <props.icon />}
+                {props.text}
+            </Button>
         </>
     );
 }
