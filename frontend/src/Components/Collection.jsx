@@ -6,7 +6,8 @@ const CardCollection = ({ cardData }) => {
   return (
     <div className="card-collection">
       {cardData.map((card, index) => (
-          <Link to={card.name}>
+        <div className="card-wrapper">
+          <Link to={`product/${card.name}`}>
             <Card
               key={index}
               imgSrc={card.imageUrl}
@@ -16,6 +17,7 @@ const CardCollection = ({ cardData }) => {
               Description={card.description}
             />
           </Link>
+        </div>
       ))}
     </div>
   );

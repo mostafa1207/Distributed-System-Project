@@ -2,10 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import { API_URL } from "../keys";
 import { useState } from "react";
+import SpinnerMini from "./../ui/SpinnerMini"
 
 export default function LoginForm() {
     const nav = useNavigate();
     const [wrongLogin , setWrongLogin] = useState("");
+    const [isLoading , setIsLoading] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -14,6 +16,7 @@ export default function LoginForm() {
         for (let entry of form.entries()) {
             user[entry[0]] = entry[1];
         }
+        setIsLoading(true);
         fetch(`${API_URL}/auth/login`, {
             method: "POST",
             body: JSON.stringify(user),
@@ -23,6 +26,7 @@ export default function LoginForm() {
         })
         .then((res) => res.json())
         .then((res) => {
+            console.log(res)
             if (res.message == "User Logged In Successfuly.") {
                 Cookies.set('token', res.token, { expires: 7, secure: true });
                 Cookies.set('tokenExpiryDate', res.tokenExpiryDate, {expires: 7, secure: true});
@@ -32,8 +36,13 @@ export default function LoginForm() {
                     nav("/store")
                 }
             } else {
-                setWrongLogin(res.message);
+                if (res.data) {
+                    setWrongLogin(`please enter a valid ${res.data[0].path}`);
+                } else {
+                    setWrongLogin(res.message);
+                }
             }
+            setIsLoading(false);
         });   
     }
 
@@ -48,7 +57,7 @@ export default function LoginForm() {
                 <input type="email" name="email" placeholder="Email" required/>
                 <input type="password" name="password" placeholder="Password" required/>
                 <span>{wrongLogin}</span>
-                <button type="submit">Log in</button>
+                <button type="submit">{isLoading ? <SpinnerMini /> : "Log in" }</button>     
             </form>
             <p>Not a member yet? <Link to={"/signup"}>Register now!</Link></p>
             <p>Or <Link to={"/"}>browse as a guest.</Link></p>
