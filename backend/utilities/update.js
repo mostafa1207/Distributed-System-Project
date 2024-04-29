@@ -1,20 +1,26 @@
 const { deleteUser } = require("./delete");
 const { findProduct } = require("./find");
+const { createUserWithId } = require("./create");
 
+// 662d89276ff715beaa82fa1b
+// 662d89276ff715beaa82fa1b
 updateUser = async function (req, user) {
-  const { username, password, email } = user;
+  const { username, password, email, cart } = user;
   const { city } = req.body;
   const { userId, userType } = req;
-  const updatedUser = await createUser(
+  const updatedUser = await createUserWithId(
     {
+      _id: user._id,
       username,
       email,
       city,
       userType,
+      cart,
     },
     password
   );
-  await deleteUser(userId);
+  await deleteUser(userId, city, userType);
+  //await user.remove();
   return updatedUser;
 };
 

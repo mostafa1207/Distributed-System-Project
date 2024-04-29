@@ -26,15 +26,15 @@ router.put(
       ),
     body("address")
       .trim()
-      .isLength({ min: 3, max: 100 })
+      .isLength({ min: 0, max: 100 })
       .isString()
       .withMessage(
         "please enter a valid address that is a string between 3 and 100 characters"
       ),
     body("phone")
       .trim()
-      .isNumeric()
-      .isLength({ min: 10, max: 20 })
+      .isString()
+      .isLength({ min: 0, max: 20 })
       .withMessage(
         "please enter a valid phone number that contain only numbers"
       ),

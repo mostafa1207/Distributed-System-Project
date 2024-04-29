@@ -4,17 +4,24 @@ const CairoCustomer = require("../models/cairo-customers");
 const AlexCustomer = require("../models/alex-customers");
 const Product = require("../models/products");
 
-deleteUser = async function (userId) {
+deleteUser = async function (userId, city, userType) {
   let user;
-  user = await CairoSeller.findByIdAndDelete(userId);
-  if (!user) {
+  if (city == "cairo" && userType == "seller") {
     user = await AlexSeller.findByIdAndDelete(userId);
   }
-  if (!user) {
+  if (city == "cairo" && userType == "customer") {
+    user = await AlexCustomer.findByIdAndDelete(userId);
+  }
+  if (city == "alex" && userType == "seller") {
+    user = await CairoSeller.findByIdAndDelete(userId);
+  }
+  if (city == "alex" && userType == "customer") {
     user = await CairoCustomer.findByIdAndDelete(userId);
   }
   if (!user) {
-    user = await AlexCustomer.findByIdAndDelete(userId);
+    const error = new Error("User Not Found.");
+    error.status = 404;
+    throw error;
   }
 };
 

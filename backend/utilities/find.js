@@ -3,6 +3,7 @@ const AlexSeller = require("../models/alex-sellers");
 const CairoCustomer = require("../models/cairo-customers");
 const AlexCustomer = require("../models/alex-customers");
 const Product = require("../models/products");
+const DeliveryInfo = require("../models/deliveries");
 
 findUser = async function (userId) {
   let user;
@@ -104,6 +105,10 @@ findByEmailAndType = async function (email, userType) {
   return user;
 };
 
+findUserInDeliveries = async function (userId) {
+  return await DeliveryInfo.findOne({ customer: userId });
+};
+
 module.exports = {
   findUser,
   findSeller,
@@ -112,4 +117,5 @@ module.exports = {
   findProducts,
   findByEmail,
   findByEmailAndType,
+  findUserInDeliveries,
 };
