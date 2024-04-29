@@ -51,7 +51,7 @@ export default function Button(props) {
 
     return (
         <>
-            <Button onClick={handler} $color={props.color}>
+            <Button type={props.type} onClick={handler} $color={props.color}>
                 {props.icon && <props.icon />}
                 {props.text}
             </Button>
