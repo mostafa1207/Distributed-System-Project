@@ -51,7 +51,7 @@ export default function LoginForm() {
                 <button type="submit">Log in</button>
             </form>
             <p>Not a member yet? <Link to={"/signup"}>Register now!</Link></p>
-            <p>Or <Link to={"/"}>Browse as a guest</Link></p>
+            <p>Or <Link to={"/"}>browse as a guest.</Link></p>
         </>
     );
 }

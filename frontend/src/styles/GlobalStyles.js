@@ -33,6 +33,10 @@ const GlobalStyles = createGlobalStyle`
 
   --color-peach: #FBE1D9;
   --color-violet: #C4B0FF;
+  --color-green: #BEF69C;
+  --color-green-hover: #93f457;
+  --color-orange: #FFBC8B;
+  --color-orange-hover: #fb9245;
   --invert: brightness(0) saturate(100%) invert(18%) sepia(13%) saturate(1701%) hue-rotate(199deg) brightness(91%) contrast(82%);
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
@@ -76,6 +80,10 @@ const GlobalStyles = createGlobalStyle`
 
 --color-peach: #611d3a;
 --color-violet: #1d1450;
+--color-green: #3a7d11;
+--color-green-hover: #47a70c;
+--color-orange: #d36311;
+--color-orange-hover: #eb741d;
 --invert: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(1659%) hue-rotate(178deg) brightness(96%) contrast(91%);
 
 --backdrop-color: rgba(0, 0, 0, 0.3);

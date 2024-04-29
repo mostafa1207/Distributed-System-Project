@@ -110,6 +110,10 @@ export default function LoginAndSignup(props) {
             border: none;
         }
 
+        & button:hover {
+            background-color: var(--color-grey-200);
+        }
+
         & a {
             text-decoration: underline;
         }

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Spinner from "./../ui/Spinner"
 import { useContext } from "react";
 import { ProductsContext } from "../context/ProductsContext";
+import { IoMdAdd } from "react-icons/io";
 
 export default function Home(props) {
 
@@ -15,9 +16,16 @@ export default function Home(props) {
 
   return (
     <>
-      <div className="main-container">{userType} </div>
-      {userType == "seller"? <Button text="Add Product"/> : <ChoiceBox />}
-      {isFetching ? <Spinner /> : <CardCollection cardData={products}/>}
+      <div className="main-container">
+        <div className="options-buttons">
+          {userType == "customer"? 
+            <Button icon={IoMdAdd} text="Add Product" color="green" path="add"/>
+            :
+            <ChoiceBox />
+          }
+        </div>
+        {isFetching ? <Spinner /> : <CardCollection cardData={products}/>}
+      </div>
     </>
   );
 }

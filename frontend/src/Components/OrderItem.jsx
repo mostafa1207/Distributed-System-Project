@@ -9,11 +9,11 @@ export default function OrderItem(props) {
         <>
         <div className="container">
       <div className="image">
-        <img src={props.OrderItem_image} alt="Image" />
+        <img src={`../../assets/${props.OrderItem_image}`} alt="Image" />
       </div>
       <div className="header">
         <h1>{props.OrderItem_name}</h1>
-        <h2>{props.OrderItem_price}</h2>
+        <h2>{props.OrderItem_price} EGP</h2>
         <h3>Quantity: {props.OrderItem_quantity}</h3>
       </div>
     </div>

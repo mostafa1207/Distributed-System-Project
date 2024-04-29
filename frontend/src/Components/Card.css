@@ -1,47 +1,60 @@
-.card-Container {
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 2rem;
+    font-family: Inter;
+    background-color: var(--color-grey-0);
+    color: var(--color-grey-900);
     width: 31rem;
+    min-height: 40rem;
+    padding: 1rem;
     border-radius: 1.5rem;
     box-shadow: 0px 0px 11px 0px var(--color-blue-700);
-    flex-direction: column;
+
+    & img {
+        height: 20rem;
+        border-radius: 1rem;
+    }
+}
+.card-container:hover{
+    background-color: var(--color-yellow-100);
+    color:var(--color-grey-900);
+}
+
+.card-text-container {
     display: flex;
-    background-color: var(--color-grey-0);
-    height: fit-content;
-    padding: 1rem 1rem 1rem 1rem;
-    color: var(--color-grey-900);
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 0 1.5rem;
+    gap: 0.8rem;
+    
+    & .seller-name {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+    
+    & .description {
+        font-size: 1.4rem;
+    }
 }
-.card-Container:hover{
-    background-color: var(--color-silver-700);
-    color:var(--color-grey-0);
-}
-#Description {
-    font-size: 1.4rem;
-    padding: 0rem 0rem 0.5rem 0rem;
-}
-img {
-    max-width: 100%;
-    border-radius: 1rem 1rem 1rem 1rem;
-}
-.text {
-    font-size: 2rem;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 300;
-}
-#price {
-    font-size: 2.7rem;
-    font-weight: 600;
-}
-#sellerName {
-    font-size: 1.9rem;
-    padding: 0rem 0rem 1rem 0rem;
-}
-.hBox {
-    height: 7rem;
+
+.title-and-price {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: wrap;
-}
-#Itemname {
-    font-size: 2.7rem;
+    align-items: center;
+    width: 100%;
     font-weight: 600;
+    
+    & .item-name {
+        font-size: 1.8rem;
+    }
+
+    & .price {
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
 }
+
