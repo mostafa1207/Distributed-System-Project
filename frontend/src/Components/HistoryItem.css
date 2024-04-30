@@ -1,0 +1,21 @@
+.rounded-rectangle{
+    width: 300px;
+    /* height: 150px; */
+    border-radius: 20px;
+    border: 2px solid black; /* Add this line to set the border style and color */
+    padding: 20px; /* Add padding to all sides (adjust as needed) */
+    display: flex;
+    flex-direction: column;
+}
+    .solid-line {
+border-top: 2px solid black;
+
+left: 12.5%; /* Set the left position to 75% of the rectangle's width */
+width: 75%; /* Make the line 75% of the rectangle's width */
+margin: 10px 0; /* Optional: Adjust margin for spacing */
+}
+   .Item_Info {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+   }
