@@ -1,5 +1,23 @@
-.choiceBox{
+.choiceboxcontainer {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    border-width: 0.3rem;
+    border-style: solid;
+    border-radius: 1rem;
+    padding: 0.6rem;
+    width: 20rem;
+    height: 4rem;
+    border-color: #00000080;
+    font-size: 1.8rem;
+}
+.sort-header{
+    font-family: Inter;
+}
+.choiceBox {
+    display: flex;
+    align-self: flex-start;
+    background: transparent;
+    border-width: 0;
+    padding: 1px;
+    font-size: 1.6rem;
 }
