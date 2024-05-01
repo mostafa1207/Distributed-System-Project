@@ -35,6 +35,9 @@ export default function Base(props) {
   `
 
   const Nav = styled.nav`
+    position: sticky;
+    top: 0;
+    z-index: 10;
     background: var(--color-grey-0);
     display: flex;
     justify-content: space-between;
