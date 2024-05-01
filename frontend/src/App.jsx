@@ -1,5 +1,9 @@
 import GlobalStyles from "./styles/GlobalStyles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
+
 import Base from "./routes/Base";
 import LoginAndSignup from "./routes/LoginAndSignup";
 import Home from "./routes/Home";
@@ -12,39 +16,76 @@ import PageNotFound from "./pages/PageNotFound";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import "./App.css";
 
-function App() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    staleTime: 0,
+  },
+});
 
+function App() {
   return (
-    <>
-      <GlobalStyles />
-      <DarkModeProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Base />} >
-                <Route index element={<Home />}/>
-                <Route path="product/:productID" element={<Product />}/>
-              </Route>
-              <Route path="/login" element={<LoginAndSignup loginOrSignup="login"/>} />
-              <Route path="/signup" element={<LoginAndSignup loginOrSignup="signup"/>} />
-              <Route path="/user" element={<Base userType="customer" />}>
-                <Route index element={<Home />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="cart" element={<Cart />} />
-                <Route path="checkout" element={<Checkout />} />
-                <Route path="product/:productID" element={<Product />}/>
-              </Route>
-              <Route path="/store" element={<Base userType="seller" />}>
-                <Route index element={<Home />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="add" element={<EditProduct editOrAdd="edit" />}/>
-                <Route path="product/:productID" element={<Product />}/>
-                <Route path="product/:productID/edit" element={<EditProduct editOrAdd="add" />}/>
-              </Route>
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </BrowserRouter>
-      </DarkModeProvider>
-    </>
+    <DarkModeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+
+        <GlobalStyles />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Base />}>
+              <Route index element={<Home />} />
+              <Route path="product/:productID" element={<Product />} />
+            </Route>
+            <Route
+              path="/login"
+              element={<LoginAndSignup loginOrSignup="login" />}
+            />
+            <Route
+              path="/signup"
+              element={<LoginAndSignup loginOrSignup="signup" />}
+            />
+            <Route path="/user" element={<Base userType="customer" />}>
+              <Route index element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="product/:productID" element={<Product />} />
+            </Route>
+            <Route path="/store" element={<Base userType="seller" />}>
+              <Route index element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="add" element={<EditProduct editOrAdd="edit" />} />
+              <Route path="product/:productID" element={<Product />} />
+              <Route
+                path="product/:productID/edit"
+                element={<EditProduct editOrAdd="add" />}
+              />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "var(--color-grey-0)",
+              color: "var(--color-grey-700)",
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 
