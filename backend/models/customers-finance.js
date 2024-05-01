@@ -6,24 +6,14 @@ const customersFinanceSchema = new Schema(
       ref: "AlexCustomers" || "CairoCustomers",
       reqiured: true,
     },
-    balance: {
-      type: Number,
-      default: 0,
-    },
-    cardInfo: {
-      type: Object,
-      reqiured: true,
-    },
-    // cart: [
-    //   {
-    //     productId: {
-    //       reqiured: true,
-    //       type: Schema.Types.ObjectId,
-    //       ref: "Products",
-    //     },
-    //     quantity: { reqiured: true, type: Number },
-    //   },
-    // ],
+    // balance: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // cardInfo: {
+    //   type: Object,
+    //   reqiured: true,
+    // },
   },
   { timestamps: true }
 );

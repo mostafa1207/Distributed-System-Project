@@ -10,10 +10,10 @@ const sellersFinanceSchema = new Schema(
       type: Number,
       default: 0,
     },
-    cardInfo: {
-      type: Object,
-      reqiured: true,
-    },
+    // cardInfo: {
+    //   type: Object,
+    //   reqiured: true,
+    // },
   },
   { timestamps: true }
 );

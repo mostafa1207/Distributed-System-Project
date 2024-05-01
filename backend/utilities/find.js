@@ -4,6 +4,8 @@ const CairoCustomer = require("../models/cairo-customers");
 const AlexCustomer = require("../models/alex-customers");
 const Product = require("../models/products");
 const DeliveryInfo = require("../models/deliveries");
+// const CustomerFinanceInfo = require("../models/customers-finance");
+const SellerFinanceInfo = require("../models/sellers-finance");
 
 findUser = async function (userId) {
   let user;
@@ -54,7 +56,7 @@ findCustomer = async function (userId) {
 };
 
 findProduct = async function (productId) {
-  let product = await Product.findById(productId);
+  const product = await Product.findById(productId);
   if (!product) {
     const error = new Error("Product Not Found.");
     error.status = 404;
@@ -109,6 +111,14 @@ findUserInDeliveries = async function (userId) {
   return await DeliveryInfo.findOne({ customer: userId });
 };
 
+// findUserInFinance = async function (userId) {
+//   return await CustomerFinanceInfo.findOne({ customer: userId });
+// };
+
+findSellerInFinance = async function (userId) {
+  return await SellerFinanceInfo.findOne({ seller: userId });
+};
+
 module.exports = {
   findUser,
   findSeller,
@@ -118,4 +128,5 @@ module.exports = {
   findByEmail,
   findByEmailAndType,
   findUserInDeliveries,
+  SellerFinanceInfo,
 };
