@@ -2,7 +2,6 @@ const { validationResult } = require("express-validator");
 
 const {
   findCustomer,
-  findProducts,
   findProduct,
   findUserInDeliveries,
 } = require("../utilities/find");
@@ -10,26 +9,9 @@ const { updateCart } = require("../utilities/update");
 const { createDeliveryInfo } = require("../utilities/create");
 const { createSellerFinanceInfo } = require("../utilities/create");
 
-exports.viewProducts = async (req, res, next) => {
-  try {
-    //const user = await findCustomer(req.userId);
-    const products = await findProducts();
-
-    res.status(200).json({
-      message: "Products Fetched Successfuly.",
-      products,
-    });
-  } catch (err) {
-    if (!err.status) {
-      err.status = 500;
-    }
-    next(err);
-  }
-};
-
 exports.addToCart = async (req, res, next) => {
   try {
-    const { productId, quantity } = req.body;
+    const { productId } = req.body;
     const user = await findCustomer(req.userId);
     const product = await findProduct(productId);
 
@@ -44,6 +26,25 @@ exports.addToCart = async (req, res, next) => {
         message: "Product is added to cart successfuly.",
       });
     }
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
+
+exports.changeQuantity = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  try {
+    checkValidation(errors);
+    const product = await findProduct(req.params.productId);
+    product.availableQuantity = req.body.quantity;
+    await product.save();
+    res.status(200).json({
+      message: "Quantity changed successfuly.",
+    });
   } catch (err) {
     if (!err.status) {
       err.status = 500;
@@ -71,7 +72,7 @@ exports.viewCart = async (req, res, next) => {
 
 exports.checkout = async (req, res, next) => {
   const { userId } = req;
-  const { address, phone, cardNumber, cardPin } = req.body;
+  const { address, phone } = req.body;
   const errors = validationResult(req);
 
   try {

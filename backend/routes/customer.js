@@ -5,8 +5,24 @@ const isAuth = require("../middlewares/is-auth");
 const customerController = require("../controllers/customer");
 
 const router = Router();
-router.get("/products", customerController.viewProducts);
-router.put("/cart", isAuth, customerController.addToCart);
+router.put("/cart/:productId", isAuth, customerController.addToCart);
+router.put(
+  "/changeQuantity/:productId",
+  isAuth,
+  [
+    body("quantity")
+      .trim()
+      .isNumeric()
+      .custom((value) => {
+        if (value < 0) {
+          return false;
+        }
+        return true;
+      })
+      .withMessage("Enter available quantity, Only Numbers are accepted"),
+  ],
+  customerController.changeQuantity
+);
 router.get("/cart", isAuth, customerController.viewCart);
 router.post(
   "/order",

@@ -2,8 +2,6 @@ const { deleteUser } = require("./delete");
 const { findProduct } = require("./find");
 const { createUserWithId } = require("./create");
 
-// 662d89276ff715beaa82fa1b
-// 662d89276ff715beaa82fa1b
 updateUser = async function (req, user) {
   const { username, password, email, cart } = user;
   const { city } = req.body;
@@ -25,7 +23,8 @@ updateUser = async function (req, user) {
 };
 
 updateCart = async function (req, user) {
-  const { productId, quantity } = req.body;
+  const { productId } = req.params;
+  const { quantity } = req.body;
   const product = user.cart.find(
     (item) => item.productId.toString() === productId
   );
