@@ -19,6 +19,7 @@ exports.signup = async (req, res, next) => {
       message: 'User Created Successfuly.',
       user: result._doc,
       token,
+      tokenExpiryDate: Date.now() + 3600000
     });
   } catch (err) {
     if (!err.status) {
