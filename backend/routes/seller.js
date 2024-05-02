@@ -49,7 +49,6 @@ router.post(
   ],
   sellerController.addProduct
 );
-router.get("/product/:productId", isAuth, sellerController.viewProduct);
 router.delete("/product/:productId", isAuth, sellerController.deleteProduct);
 router.put(
   "/product/:productId",

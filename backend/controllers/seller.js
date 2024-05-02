@@ -23,27 +23,7 @@ exports.addProduct = async (req, res, next) => {
     res.status(201).json({
       message: "Product Added Successfuly.",
       product: result._doc,
-    });
-  } catch (err) {
-    if (!err.status) {
-      err.status = 500;
-    }
-    next(err);
-  }
-};
-
-exports.viewProduct = async (req, res, next) => {
-  const { userId } = req;
-  const { productId } = req.params;
-
-  try {
-    const user = await findSeller(userId);
-    const product = await findProduct(productId);
-    checkAuth(product.seller.toString(), userId);
-
-    res.status(200).json({
-      message: "Product Details Fetched Successfuly.",
-      product,
+      sellerUsername: user.username,
     });
   } catch (err) {
     if (!err.status) {
@@ -110,6 +90,7 @@ exports.editProduct = async (req, res, next) => {
     res.status(200).json({
       message: "Product Updated Succesfuly",
       product: { ...editedProduct._doc },
+      sellerUsername: user.username,
     });
   } catch (err) {
     if (!err.status) {

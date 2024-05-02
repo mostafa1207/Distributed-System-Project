@@ -35,7 +35,7 @@ exports.editUserProfile = async (req, res, next) => {
     if (address || phone) {
       deliveryInfo = await findUserInDeliveries(userId);
       if (!deliveryInfo) {
-        deliveryInfo = await createDeliveryInfo(userId);
+        deliveryInfo = await createDeliveryInfo(userId, address, phone);
       }
       if (deliveryInfo.address != address) {
         deliveryInfo.address = address;

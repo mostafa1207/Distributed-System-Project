@@ -2,9 +2,11 @@ const CairoSeller = require("../models/cairo-sellers");
 const AlexSeller = require("../models/alex-sellers");
 const CairoCustomer = require("../models/cairo-customers");
 const AlexCustomer = require("../models/alex-customers");
-//const CustomerFinance = require("../models/customers-finance");
 const Product = require("../models/products");
 const DeliveryInfo = require("../models/deliveries");
+// const CustomerFinanceInfo = require("../models/customers-finance");
+const SellerFinanceInfo = require("../models/sellers-finance");
+const { getBalance } = require("./balance-lookup-table");
 
 createUser = async function (req, hashedPassword) {
   const { username, email, city, userType } = req.body || req;
@@ -112,9 +114,26 @@ createProduct = async function (req) {
   return await product.save();
 };
 
-createDeliveryInfo = async function (userId) {
-  const deliveryInfo = new DeliveryInfo({ customer: userId });
+createDeliveryInfo = async function (userId, address, phone) {
+  const deliveryInfo = new DeliveryInfo({ customer: userId, address, phone });
   return await deliveryInfo.save();
+};
+
+// createCustomerFinanceInfo = async function (userId, cardNumber, cardPin) {
+//   balance = getBalance(cardPin);
+//   const customerFinanceInfo = new CustomerFinanceInfo({
+//     customer: userId,
+//     balance,
+//     cardInfo: { cardNumber, cardPin },
+//   });
+//   return await customerFinanceInfo.save();
+// };
+
+createSellerFinanceInfo = async function (userId) {
+  const sellerFinanceInfo = new SellerFinanceInfo({
+    seller: userId,
+  });
+  return await sellerFinanceInfo.save();
 };
 
 module.exports = {
@@ -122,4 +141,6 @@ module.exports = {
   createUserWithId,
   createProduct,
   createDeliveryInfo,
+  // createCustomerFinanceInfo,
+  createSellerFinanceInfo,
 };
