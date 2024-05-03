@@ -1,61 +1,46 @@
 import React, { useState } from 'react';
 import './CartItem.css';
 
-const CartItem = () => {
+const CartItem = ({ item, updateTotal, deleteItem }) => {
     const [quantity, setQuantity] = useState(1);
 
     const increaseQuantity = () => {
-        return
+        setQuantity(quantity + 1);
+        updateTotal(item.price);
     };
 
     const decreaseQuantity = () => {
-        return
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+            updateTotal(-item.price);
+        }
+    };
+
+    const getTotalPrice = () => {
+        return (quantity * item.price).toFixed(2);
+    };
+
+    const handleDelete = () => {
+        deleteItem(item.id, item.price * quantity);
     };
 
     return (
-        <div className="cart-container">
-            <div className="cart-wrapper">
-                <h1 className="">Cart</h1>
-                <div className="cart-card">
-                    <div className="cart-item-row">
-                        <div className="cart-item">
-                            <img className="item-iamge" src="https://www.jesrestaurantequipment.com/thumbnail.asp?file=assets/images/products/cbof-4_thumbnail.jpg&maxx=90&maxy=115" alt="" />
-                            <div style={{ marginLeft: '50px' }}>
-                                <p className="cart-item-name">item 1</p>
-                                <p>Seller: ahmed</p>
-                                <div className="quantity-button">
-                                    <span className="minus" onClick={decreaseQuantity}>-</span>
-                                    <span className="quantity">{quantity}</span>
-                                    <span className="plus" onClick={increaseQuantity}>+</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="left-details">
-                            <div className="cart-item-total">5.40 EGP</div>
-                            <div style={{ paddingBottom: '30px' }}><a href="#" className='remove-item'>X</a></div>
-                        </div>
-                    </div>
-                    <div className="cart-item-row">
-                        <div className="cart-item">
-                            <img className="item-iamge" src="https://www.jesrestaurantequipment.com/thumbnail.asp?file=assets/images/products/cbof-4_thumbnail.jpg&maxx=90&maxy=115" alt="" />
-                            <div style={{ marginLeft: '50px' }}>
-                                <p className="cart-item-name">item 1</p>
-                                <p>Seller: ahmed</p>
-                                <div className="quantity-button">
-                                    <span className="minus" onClick={decreaseQuantity}>-</span>
-                                    <span className="quantity">{quantity}</span>
-                                    <span className="plus" onClick={increaseQuantity}>+</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="left-details">
-                            <div className="cart-item-total">5.40 EGP</div>
-                            <div style={{ paddingBottom: '30px' }}><a href="#" className='remove-item'>X</a></div>
-                        </div>
-                    </div>
-                    
+        <div className="cart-item-row">
+            <div className="right-details">
+                <img className="item-image" src={item.photo} alt="" />
+                <div className="item-info">
+                    <p className="cart-item-name">{item.name}</p>
+                    <p>Seller: {item.seller}</p>
                 </div>
-                
+            </div>
+            <div className="quantity-button">
+                <span className="minus" onClick={decreaseQuantity}>-</span>
+                <span className="quantity">{quantity}</span>
+                <span className="plus" onClick={increaseQuantity}>+</span>
+            </div>
+            <div className="left-details">
+                <div><button className='remove-item' onClick={handleDelete}>X</button></div>
+                <div className="cart-item-total">{getTotalPrice()} EGP</div>
             </div>
         </div>
     );
