@@ -128,5 +128,5 @@ module.exports = {
   findByEmail,
   findByEmailAndType,
   findUserInDeliveries,
-  SellerFinanceInfo,
+  findSellerInFinance,
 };

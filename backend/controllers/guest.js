@@ -1,11 +1,14 @@
-const { findProducts, findProduct } = require("../utilities/find");
+const Product = require("../models/products");
+const { findProducts } = require("../utilities/find");
 
 exports.viewProduct = async (req, res, next) => {
   const { productId } = req.params;
 
   try {
-    const product = await findProduct(productId);
-
+    const product = await Product.findById(productId).populate(
+      "seller",
+      "username"
+    );
     res.status(200).json({
       message: "Product Details Fetched Successfuly.",
       product,
@@ -21,10 +24,17 @@ exports.viewProduct = async (req, res, next) => {
 exports.viewProducts = async (req, res, next) => {
   try {
     const products = await findProducts();
-
+    let productWithSellerUsername = [];
+    for (let product of products) {
+      product = await Product.findById(product._id).populate(
+        "seller",
+        "username"
+      );
+      productWithSellerUsername.push(product);
+    }
     res.status(200).json({
       message: "Products Fetched Successfuly.",
-      products,
+      productWithSellerUsername,
     });
   } catch (err) {
     if (!err.status) {
