@@ -9,7 +9,7 @@ export const ProductsProvider = ({ children }) => {
     const [isFetching, setIsFetching] = useState(true);
     useEffect(() => {
         setIsFetching(true);
-        fetch(`${API_URL}/customer/products`, {
+        fetch(`${API_URL}/guest/products`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

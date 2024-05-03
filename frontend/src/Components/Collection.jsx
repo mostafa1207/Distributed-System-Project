@@ -7,7 +7,7 @@ const CardCollection = ({ cardData }) => {
     <div className="card-collection">
       {cardData.map((card, index) => (
         <div className="card-wrapper">
-          <Link to={`product/${card.name}`}>
+          <Link to={`product/${card._id}`}>
             <Card
               key={index}
               imgSrc={card.imageUrl}

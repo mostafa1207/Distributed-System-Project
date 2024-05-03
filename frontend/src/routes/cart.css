@@ -5,3 +5,17 @@
     align-items: center;
     margin-top: 50px;
 }
+
+.cart-container {
+    margin: 0% 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
+.cart-wrapper {
+    max-width: 960px;
+    width: 100%;
+    padding: 10px;
+}

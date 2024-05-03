@@ -1,88 +1,78 @@
-.cart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-}
-
-.cart-wrapper {
-    max-width: 960px;
-    width: 100%;
-    padding: 10px;
-}
-
-.cart-card {
-    margin: 10px;
-    padding: 10px;
-    border-top: 3px solid #000000;
-}
-
-.cart-item {
-    display: flex;
-    align-items: center;
-    width: 50%;
-}
-
 .cart-item-row {
     font-size: 20px;
     width: 90%;
     margin: 0 auto; 
     display: flex;
-    text-align: center;
+    align-items: center;
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #000000;
 }
 
+.right-details {
+    width: 40%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.item-image {
+    width: 100px;
+    height: 100px; 
+    margin-right: 20px;
+}
+
+.item-info {
+    width: 50%; 
+}
 
 .quantity-button {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    width: 100%; 
-    margin-top: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
 }
 
-.quantity-button span{
-    width: 100%;
+.quantity-button span {
+    width: 40px;
+    height: 40px;
     text-align: center;
+    line-height: 40px; 
     font-size: 20px;
     font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    
 }
 
-.quantity-button span.quantity{
-    font-size: 20px;
+.quantity-button span.quantity {
+    margin: 0 px;
+    padding: 0;
     border-right: 2px solid rgba(0, 0, 0, 0.2);
     border-left: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-.quantity-button span.plus{
+.remove-item {
+    color: white;
+    background-color: #f44336; 
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.quantity-button span.minus{
-    cursor: pointer;
+.remove-item:hover {
+    background-color: #d32f2f; 
 }
-
-
-.remove-item{
-    color: rgb(0, 0, 0);
+.cart-item-total {
     font-size: 20px;
-    cursor: pointer;
 }
 
-.left-details{
+.left-details {
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: left;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
-.cart-item-total{
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    font-size: 20px;
-}
