@@ -66,11 +66,9 @@ function UpdateUserForm() {
           type="reset"
           onClick={() => onCloseModal?.()}
         >
-          Cancel
+          Submit
         </Button>
-        <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Create new cabin"}
-        </Button>
+        <Button disabled={isUpdating}>Edit User</Button>
       </FormRow>
     </Form>
   );
