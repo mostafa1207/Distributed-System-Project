@@ -4,15 +4,28 @@ const { updateUser } = require("../utilities/update");
 const { findUser, findUserInDeliveries } = require("../utilities/find");
 const { checkValidation } = require("../utilities/check");
 const { createDeliveryInfo } = require("../utilities/create");
+const DeliveryInfo = require("../models/deliveries");
 
 exports.getUserProfile = async (req, res, next) => {
+  const { userId } = req;
   try {
-    const user = await findUser(req.userId);
+    const user = await findUser(userId);
 
-    res.status(200).json({
-      message: "User Found Succesfuly",
-      user: { ...user._doc, password: undefined },
+    const deliveryInfo = await DeliveryInfo.findOne({
+      customer: userId,
     });
+    if (deliveryInfo) {
+      res.status(200).json({
+        message: "User Found Succesfuly with delivery info",
+        user,
+        deliveryInfo,
+      });
+    } else {
+      res.status(200).json({
+        message: "User Found Succesfuly",
+        user,
+      });
+    }
   } catch (err) {
     if (!err.status) {
       err.status = 500;
