@@ -11,7 +11,7 @@ const { createSellerFinanceInfo } = require("../utilities/create");
 
 exports.addToCart = async (req, res, next) => {
   try {
-    const { productId } = req.body;
+    const { productId } = req.params;
     const user = await findCustomer(req.userId);
     const product = await findProduct(productId);
 
@@ -36,15 +36,33 @@ exports.addToCart = async (req, res, next) => {
 
 exports.changeQuantity = async (req, res, next) => {
   const errors = validationResult(req);
+  const { quantity } = req.body;
+  const { productId } = req.params;
 
   try {
     checkValidation(errors);
-    const product = await findProduct(req.params.productId);
-    product.availableQuantity = req.body.quantity;
-    await product.save();
-    res.status(200).json({
-      message: "Quantity changed successfuly.",
-    });
+    let user = await findCustomer(req.userId);
+    let product = user.cart.find((obj) => obj.productId == productId);
+    if (!product) {
+      res.status(400).json({
+        message: "Product is not found in the cart.",
+      });
+    } else {
+      if (quantity == 0) {
+        user.cart.pull({ productId: productId });
+        await user.save();
+        res.status(200).json({
+          message: "Product removed successfuly.",
+        });
+      } else {
+        product.quantity = quantity;
+        await user.save();
+        res.status(200).json({
+          message: "Quantity changed successfuly.",
+          user,
+        });
+      }
+    }
   } catch (err) {
     if (!err.status) {
       err.status = 500;
