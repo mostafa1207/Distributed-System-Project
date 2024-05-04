@@ -60,6 +60,16 @@ function UpdateUserForm() {
           onBlur={(e) => handleUpdate(e, "phone")}
         />
       </FormRow>
+      <FormRow>
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
+          Submit
+        </Button>
+        <Button disabled={isUpdating}>Edit User</Button>
+      </FormRow>
     </Form>
   );
 }
