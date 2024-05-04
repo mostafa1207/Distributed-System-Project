@@ -12,9 +12,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    gap: 3rem;
+    gap: 2.8rem;
     min-width: 40rem;
     margin-left: 6vw;
+    position: sticky;
+    top: 12.2rem;
     
     & input {
         background-color: var(--color-grey-0);

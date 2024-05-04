@@ -6,14 +6,16 @@ import { MdOutlineDownloadDone } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { API_URL } from "../keys";
 import Cookies from "js-cookie"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import Spinner from "../ui/Spinner";
 
-export default function EditProduct(props) {
 
+export default function EditProduct(props) {
+    const nav = useNavigate();
     const { productId } = useParams();
     const [ productData, setProductData ] = useState({categories: [""]});
     const [isFetching, setIsFetching] = useState(true);
+    const [isLoading , setIsLoading] = useState(false);
 
     useEffect(() => {
         if(props.editOrAdd == "edit") {   
@@ -31,6 +33,8 @@ export default function EditProduct(props) {
                 setProductData(res.product);
                 setIsFetching(false);
             });
+        } else {
+            setIsFetching(false);
         }
         }, []);
 
@@ -45,6 +49,7 @@ export default function EditProduct(props) {
                 product[entry[0]] = entry[1];
             }
         }
+        setIsLoading(true)
         if (props.editOrAdd == "edit") {    
             fetch(`${API_URL}/seller/product/${productId}`, {
                 method: "PUT",
@@ -56,7 +61,9 @@ export default function EditProduct(props) {
             })
             .then((res) => res.json())
             .then((res) => {
+                setIsLoading(false)
                 console.log(res)
+                nav(`/store/product/${res.product._id}`)
             });
         } else if (props.editOrAdd == "add") {
             fetch(`${API_URL}/seller/product`, {
@@ -69,7 +76,9 @@ export default function EditProduct(props) {
             })
             .then((res) => res.json())
             .then((res) => {
-                // console.log(res)
+                setIsLoading(false)
+                console.log(res)
+                nav(`/store/product/${res.product._id}`)
             });
         }
     }
@@ -116,9 +125,9 @@ export default function EditProduct(props) {
                 })}
                 <button className="form-input-input" onClick={addCategory}>Add Category</button>
                 {props.editOrAdd == "edit" ? 
-                    <Button text="Save changes" color="green" icon={MdOutlineDownloadDone}></Button>
+                    <Button isLoading={isLoading} text="Save changes" color="green" icon={MdOutlineDownloadDone}></Button>
                     :
-                    <Button type="submit" text="Add Product" color="green" icon={IoMdAdd}></Button>
+                    <Button isLoading={isLoading} type="submit" text="Add Product" color="green" icon={IoMdAdd}></Button>
                 }
             </Container>
         }

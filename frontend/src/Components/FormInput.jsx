@@ -10,9 +10,9 @@ export const FormInput = ({
                 <div className="form-input-container multiline">
                     <label htmlFor={label} className="form-input-label">{label}</label>
                     {type == "paragraph" ?
-                        <textarea className="form-input-input" rows="3" placeholder={placeholder} name={name} defaultValue={defaultValue}></textarea>
+                        <textarea className="form-input-input" rows="3" placeholder={placeholder} name={name} defaultValue={defaultValue} required></textarea>
                     :
-                        <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder}/>
+                        <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder} required/>
                     }
                 </div>
             :
@@ -21,7 +21,7 @@ export const FormInput = ({
                 {type == "image" ? 
                     <button className="form-input-input">Upload</button>
                 :
-                    <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder}/>
+                    <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder} required/>
                 }
             </div>
             }           
