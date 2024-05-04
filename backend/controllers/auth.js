@@ -53,6 +53,7 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       message: 'User Logged In Successfuly.',
       token,
+      userId:user._id.toString(),
       tokenExpiryDate: Date.now() + 3600000,
     });
   } catch (err) {
