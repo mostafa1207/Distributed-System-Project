@@ -17,17 +17,17 @@ export default function EditProduct(props) {
     const queryClient = useQueryClient();
     const nav = useNavigate();
     const { productId } = useParams();
-    const [ productData, setProductData ] = useState({categories: [""]});
+    const [ productData, setProductData ] = useState({unset: true, category: [""]});
     const [isLoading , setIsLoading] = useState(false);
     const { data, status } = useQuery([`product_${productId}`], fetchProduct, {
         onSuccess: (data) => {
-            setProductData({...data, ...productData});
+            setProductData(data);
         }
     });
 
     useEffect(() => {
         if (status == "success") {
-            setProductData({...data, ...productData});
+            setProductData(data);
         }
     }, [])
 
@@ -42,17 +42,17 @@ export default function EditProduct(props) {
             const data = await res.json();
             return data.product;
         } else {
-            return {};
+            return {category: [""]};
         }
     }
 
     const handleSubmit= (event) => {
         event.preventDefault();
         const form = new FormData(event.target);
-        let product = {};
+        let product = {"category": []};
         for (let entry of form.entries()) {
             if (entry[0].includes("category_")) {
-                product["category"] = entry[1];
+                product.category.push(entry[1]);
             } else {
                 product[entry[0]] = entry[1];
             }
@@ -85,7 +85,6 @@ export default function EditProduct(props) {
             })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
                 setIsLoading(false);
                 toast.success("product successfully added");
                 queryClient.removeQueries({ queryKey: ["products"] });
@@ -96,15 +95,15 @@ export default function EditProduct(props) {
 
     const addCategory = (event) => {
         const form = new FormData(event.target.parentElement);
-        let product = {"categories": []};
+        let product = {"category": []};
         for (let entry of form.entries()) {
             if (entry[0].includes("category_")) {
-                product["categories"].push(entry[1]);
+                product.category.push(entry[1]);
             } else {
                 product[entry[0]] = entry[1];
             }
         }
-        product["categories"].push("");
+        product["category"].push("");
         setProductData(product);
     }
 
@@ -122,7 +121,7 @@ export default function EditProduct(props) {
 
     return (
         <>
-        {(status != "success" && props.editOrAdd == "edit") ? <Spinner /> :
+        {((status != "success" || productData.unset) && props.editOrAdd == "edit") ? <Spinner /> :
             <Container onSubmit={handleSubmit}>
                 <FormInput label="Product Name" name="name" defaultValue={productData.name} placeholder="Enter the name of the product" type="text" multiline={true}></FormInput>
                 <FormInput label="Description" name="description" defaultValue={productData.description} placeholder="Enter details about the product" type="paragraph" multiline={true}></FormInput>
@@ -130,8 +129,8 @@ export default function EditProduct(props) {
                 <FormInput label="Quantity" name="availableQuantity" defaultValue={productData.availableQuantity} placeholder="0" type="number"></FormInput>
                 <FormInput label="Upload an image" placeholder="2000" type="image"></FormInput>
                 <label className="form-input-label">Categories</label>
-                {productData.categories.map((value, index) => {
-                    return <input key={index} type="text" id={`category_${index}`} defaultValue={value} name={`category_${index}`} className="form-input-input" placeholder="Category"/>
+                {productData.category.map((value, index) => {
+                    return <input key={index} type="text" id={`category_${index}`} defaultValue={value} name={`category_${index}`} className="form-input-input" placeholder="Category" required/>
                 })}
                 <button className="form-input-input" onClick={addCategory}>Add Category</button>
                 {props.editOrAdd == "edit" ? 

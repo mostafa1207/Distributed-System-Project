@@ -38,7 +38,6 @@ exports.viewProducts = async (req, res, next) => {
     const products = await findProducts();
     let productsWithSellerUsername = [];
     for (let product of products) {
-      console.log(product);
       const sellerUsername = await findSellerUsername(product.seller);
       productsWithSellerUsername.push({
         _id: product._id,
