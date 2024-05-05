@@ -5,14 +5,21 @@ import { useState, useEffect } from "react";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useQuery } from '@tanstack/react-query';
 import { API_URL } from '../keys';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUserData } from "./../features/user/useUserData";
+import { toast } from "react-hot-toast";
 import Cookies from "js-cookie"
 import Spinner from '../ui/Spinner';
+import SpinnerMini from "../ui/SpinnerMini";
 import './Checkout.css'
 
 export default function Checkout(props) {
 
+    const queryClient = useQueryClient();
     const { data, status } = useQuery(["cart"], fetchCart);
-    const [totalAmount, setTotalAmount] = useState(0);
+    const [totalAmount, setTotalAmount] = useState(0); 
+    const [ isSending, setIsSending]  = useState(false);
+    const { isLoading, user: { city, address, phone } = {} } = useUserData();    
     
     async function fetchCart() {
       const res = await fetch(`${API_URL}/customer/cart`, {
@@ -47,41 +54,56 @@ export default function Checkout(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = new FormData(event.target);
-        let user = {};
+        let checkoutData = {};
         for (let entry of form.entries()) {
-            user[entry[0]] = entry[1];
+            checkoutData[entry[0]] = entry[1];
         }
+        if (checkoutData.phone.length != 11) {
+            toast.error("please phone number of 11 digits")
+            return;
+        }
+        if (checkoutData.cardNumber.length != 16) {
+            toast.error("please input card number of 12 digits")
+            return;
+        }
+        if (checkoutData.cardPin.length != 4) {
+            toast.error("please input card pin of 4 digits")
+            return;
+        }
+        setIsSending(true)
+        fetch(`${API_URL}/customer/order`, {
+            method: "POST",
+            body: JSON.stringify(checkoutData),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Cookies.get("token")}`
+            },
+        })
+        .then((res) => res.json())
+        .then((res) => {
+            setIsSending(false)
+            toast.success(res.message);
+            queryClient.invalidateQueries({ queryKey: ["cart"] });
+        });
     }
-
-    const orders = [{
-        name: "iphone 13 pro max",
-        price: "500",
-        quantity: "20",
-        image: "house.png"
-    },{
-        name: "Hot and juicy Pizza",
-        price: "500",
-        quantity: "20",
-        image: "house.png"
-    }];
 
     return (
         <>
-            {status != "success" ? <Spinner /> : 
+            {(status != "success" || isLoading) ? <Spinner /> : 
                 <div className="checkout-body">
                     <form className="checkout-form" action="/" onSubmit={handleSubmit}>
                         <h1 className="checkout-title">Delivery info</h1>
                         <div className="checkout-form-div">
-                            <input type="text" placeholder="City" name="city" required/>
-                            <input type="text" placeholder="Address" name="address" required/>
-                            <input type="number" placeholder="Phone" name="phone" required minLength="11" maxLength="11"/>
+                            <input type="text" placeholder="City" name="city" defaultValue={city} required/>
+                            <input type="text" placeholder="Address" name="address" defaultValue={address} required/>
+                            <input type="number" placeholder="Phone" name="phone" defaultValue={phone} required minLength="11" maxLength="11"/>
                         </div>
                         <h1 className="checkout-title">Payment info</h1>
                         <div className="checkout-form-div">
                             <input type="number" placeholder="Card number" name="cardNumber" required/>
                             <input type="number" placeholder="Card pin" name="cardPin" required/>
                         </div>
-                        <Button type="submit" text="Submit" color="green" icon={MdOutlineDownloadDone}/>
+                        <Button type="submit" isLoading={isSending} text="Submit" color="green" icon={MdOutlineDownloadDone}/>
                     </form>
                     <FloatingCard title="Order Summary"
                         total={

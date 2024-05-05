@@ -39,6 +39,13 @@ export default function Button(props) {
                         background-color: var(--color-orange-hover);
                     }
                 `;
+            } else if (props.$color == "red") {
+                return css` 
+                    background-color: var(--color-red);
+                    &:hover {
+                        background-color: var(--color-red-hover);
+                    }
+                `;
             } else {
                 return css`
                     background-color: var(--color-grey-300);

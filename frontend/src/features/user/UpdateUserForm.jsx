@@ -7,6 +7,7 @@ import Spinner from "../../ui/Spinner";
 import { useUserData } from "./useUserData";
 import { useUpdateUser } from "./useUpdateUser";
 import Button from "../../ui/Button";
+import toast from "react-hot-toast";
 
 function UpdateUserForm() {
   const { register, handleSubmit } = useForm();
@@ -24,6 +25,10 @@ function UpdateUserForm() {
   // }
 
   function onSubmit(data) {
+    if (data.phone.length != 11) {
+      toast.error("please input a valid phone number");
+      return;
+    }
     updateUser(data);
   }
 
@@ -32,10 +37,10 @@ function UpdateUserForm() {
       <FormRow label="Username">
         <Input
           type="string"
-          id="user-name"
+          id="username"
           defaultValue={username}
           disabled={isUpdating}
-          {...register("user-name")}
+          {...register("username")}
           // onBlur={(e) => handleUpdate(e, "username")}
         />
       </FormRow>
@@ -43,10 +48,10 @@ function UpdateUserForm() {
       <FormRow label="City">
         <Input
           type="string"
-          id="user-city"
+          id="city"
           defaultValue={city}
           disabled={isUpdating}
-          {...register("user-city")}
+          {...register("city")}
           // onBlur={(e) => handleUpdate(e, "city")}
         />
       </FormRow>
@@ -54,10 +59,10 @@ function UpdateUserForm() {
       <FormRow label="Address">
         <Input
           type="string"
-          id="user-address"
+          id="address"
           defaultValue={address}
           disabled={isUpdating}
-          {...register("user-address")}
+          {...register("address")}
           // onBlur={(e) => handleUpdate(e, "address")}
         />
       </FormRow>
@@ -65,17 +70,14 @@ function UpdateUserForm() {
       <FormRow label="Phone No.">
         <Input
           type="number"
-          id="phone-number"
+          id="phone"
           defaultValue={phone}
           disabled={isUpdating}
-          {...register("phone-number")}
+          {...register("phone")}
           // onBlur={(e) => handleUpdate(e, "phone")}
         />
       </FormRow>
       <FormRow>
-        <Button variation="secondary" type="reset">
-          Submit
-        </Button>
         <Button disabled={isUpdating}>Edit User</Button>
       </FormRow>
     </Form>

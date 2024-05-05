@@ -5,38 +5,46 @@ import { IoMdAdd } from "react-icons/io";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { API_URL } from "../keys";
-import Cookies from "js-cookie"
 import { useParams, useNavigate } from "react-router-dom"
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from "react-hot-toast";
 import Spinner from "../ui/Spinner";
+import Cookies from "js-cookie"
 
 
 export default function EditProduct(props) {
+
+    const queryClient = useQueryClient();
     const nav = useNavigate();
     const { productId } = useParams();
     const [ productData, setProductData ] = useState({categories: [""]});
-    const [isFetching, setIsFetching] = useState(true);
     const [isLoading , setIsLoading] = useState(false);
+    const { data, status } = useQuery([`product_${productId}`], fetchProduct, {
+        onSuccess: (data) => {
+            setProductData({...data, ...productData});
+        }
+    });
 
     useEffect(() => {
-        if(props.editOrAdd == "edit") {   
-            setIsFetching(true);
-            fetch(`${API_URL}/guest/product/${productId}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${Cookies.get("token")}`
-                },
-            })
-            .then((res) => res.json())
-            .then((res) => {
-                res.product["categories"] = [res.product["category"]];
-                setProductData(res.product);
-                setIsFetching(false);
-            });
-        } else {
-            setIsFetching(false);
+        if (status == "success") {
+            setProductData({...data, ...productData});
         }
-        }, []);
+    }, [])
+
+    async function fetchProduct() {
+        if (props.editOrAdd == "edit") {
+            const res = await fetch(`${API_URL}/guest/product/${productId}`, {
+              method: "GET",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+            });
+            const data = await res.json();
+            return data.product;
+        } else {
+            return {};
+        }
+    }
 
     const handleSubmit= (event) => {
         event.preventDefault();
@@ -61,8 +69,9 @@ export default function EditProduct(props) {
             })
             .then((res) => res.json())
             .then((res) => {
-                setIsLoading(false)
-                console.log(res)
+                setIsLoading(false);
+                toast.success("product successfully edited");
+                queryClient.removeQueries({ queryKey: ["products"] });
                 nav(`/store/product/${res.product._id}`)
             });
         } else if (props.editOrAdd == "add") {
@@ -76,8 +85,10 @@ export default function EditProduct(props) {
             })
             .then((res) => res.json())
             .then((res) => {
-                setIsLoading(false)
                 console.log(res)
+                setIsLoading(false);
+                toast.success("product successfully added");
+                queryClient.removeQueries({ queryKey: ["products"] });
                 nav(`/store/product/${res.product._id}`)
             });
         }
@@ -95,7 +106,6 @@ export default function EditProduct(props) {
         }
         product["categories"].push("");
         setProductData(product);
-        console.log(product)
     }
 
     const Container = styled.form`
@@ -112,7 +122,7 @@ export default function EditProduct(props) {
 
     return (
         <>
-        {isFetching ? <Spinner /> :
+        {(status != "success" && props.editOrAdd == "edit") ? <Spinner /> :
             <Container onSubmit={handleSubmit}>
                 <FormInput label="Product Name" name="name" defaultValue={productData.name} placeholder="Enter the name of the product" type="text" multiline={true}></FormInput>
                 <FormInput label="Description" name="description" defaultValue={productData.description} placeholder="Enter details about the product" type="paragraph" multiline={true}></FormInput>

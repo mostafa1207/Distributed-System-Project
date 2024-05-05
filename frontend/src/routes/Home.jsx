@@ -6,11 +6,12 @@ import Spinner from "./../ui/Spinner"
 import { IoMdAdd } from "react-icons/io";
 import { useQuery } from "@tanstack/react-query";
 import { API_URL } from "../keys";
+import Cookies from "js-cookie"
 
 export default function Home(props) {
 
-  const { data, status } = useQuery(["products"], fetchProducts);
   const userType = useOutletContext();
+  const { data, status } = useQuery(["products"], fetchProducts);
   
   async function fetchProducts() {
     const res = await fetch(`${API_URL}/guest/products`, {
@@ -20,7 +21,12 @@ export default function Home(props) {
       },
     });
     const data = await res.json();
-    return data.productWithSellerUsername;
+    let products = data.productWithSellerUsername;
+    if (userType == "seller") {
+      const sellerID = Cookies.get("userID");
+      products = products.filter((product) => {return product.seller ? (product.seller._id == sellerID) : false });
+    }
+    return products;
   }
 
   return (

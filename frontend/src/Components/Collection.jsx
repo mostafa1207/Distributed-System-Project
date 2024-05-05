@@ -4,21 +4,29 @@ import "./Collection.css"
 
 const CardCollection = ({ cardData }) => {
   return (
-    <div className="card-collection">
-      {cardData.map((card, index) => (
-        <div className="card-wrapper" key={index}>
-          <Link to={`product/${card._id}`}>
-            <Card
-              imgSrc={card.imageUrl}
-              itemName={card.name}
-              price={card.price}
-              sellerName={card.seller ? card.seller.username : null}
-              Description={card.description}
-            />
-          </Link>
+    <>
+      {cardData.length ?
+        <div className="card-collection">
+          {cardData.map((card, index) => (
+            <div className="card-wrapper" key={index}>
+              <Link to={`product/${card._id}`}>
+                <Card
+                  imgSrc={card.imageUrl}
+                  itemName={card.name}
+                  price={card.price}
+                  sellerName={card.seller ? card.seller.username : null}
+                  Description={card.description}
+                  />
+              </Link>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      :
+        <div className="no-products">
+          You don't have any products yet.
+        </div>
+      }
+    </>
   );
 };
 

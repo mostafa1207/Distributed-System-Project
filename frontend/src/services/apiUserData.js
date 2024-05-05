@@ -14,7 +14,7 @@ export async function getUserData() {
   return data.user;
 }
 
-export async function updateUser(newUserField) {
+export async function updateUser(newUser) {
   const {username, city, address, phone}  = await getUserData();
   const apiCall = await fetch(`${API_URL}/user`, {
     method: "PUT",
@@ -22,7 +22,7 @@ export async function updateUser(newUserField) {
       "Content-Type": "application/json",
       Authorization: ` Bearer ${Cookies.get("token")} `,
     },
-    body: JSON.stringify({username, city, address, phone, ...newUserField}),
+    body: JSON.stringify(newUser),
   });
   const data = await apiCall.json();
   return data;

@@ -10,7 +10,8 @@
     min-height: 40rem;
     padding: 1rem;
     border-radius: 1.5rem;
-    box-shadow: 0px 0px 11px 0px var(--color-blue-700);
+    box-shadow: 0px 0px 5px 0px var(--color-grey-400);
+    transition: scale 200ms;
 
     & img {
         height: 20rem;
@@ -18,7 +19,8 @@
     }
 }
 .card-container:hover{
-    background-color: var(--color-yellow-100);
+    scale: 1.02;
+    /* background-color: var(--color-yellow-100); */
     color:var(--color-grey-900);
 }
 

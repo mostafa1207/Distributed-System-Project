@@ -3,13 +3,17 @@ import cartImage from "./../../assets/shopping-cart.png"
 import LoginForm from "../Components/LoginForm";
 import SignupForm from "../Components/SignupForm";
 import { useEffect } from "react";
+import { useQueryClient } from '@tanstack/react-query';
 import Cookies from "js-cookie"
 
 export default function LoginAndSignup(props) {
 
+    const queryClient = useQueryClient();
+
     useEffect(() => {
         Cookies.remove('token');
         Cookies.remove('tokenExpiryDate');
+        queryClient.removeQueries();
     })
     
     const PageContainer = styled.div`

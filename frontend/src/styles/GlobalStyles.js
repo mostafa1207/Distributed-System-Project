@@ -38,6 +38,8 @@ const GlobalStyles = createGlobalStyle`
   --color-green-hover: #93f457;
   --color-orange: #FFBC8B;
   --color-orange-hover: #fb9245;
+  --color-red: #FF8888;
+  --color-red-hover: #FF3333;
   --invert: brightness(0) saturate(100%) invert(18%) sepia(13%) saturate(1701%) hue-rotate(199deg) brightness(91%) contrast(82%);
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
@@ -86,6 +88,8 @@ const GlobalStyles = createGlobalStyle`
 --color-green-hover: #47a70c;
 --color-orange: #d36311;
 --color-orange-hover: #eb741d;
+--color-red: #BB0000;
+--color-red-hover: #dc2020;
 --invert: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(1659%) hue-rotate(178deg) brightness(96%) contrast(91%);
 
 --backdrop-color: rgba(0, 0, 0, 0.3);

@@ -27,6 +27,7 @@ const Cart = () => {
                 },
             });
             const data = await res.json()
+            queryClient.invalidateQueries({ queryKey: ["cart"] });
         }
     });
     
