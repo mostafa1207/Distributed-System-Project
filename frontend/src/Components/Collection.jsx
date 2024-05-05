@@ -14,7 +14,7 @@ const CardCollection = ({ cardData }) => {
                   imgSrc={card.imageUrl}
                   itemName={card.name}
                   price={card.price}
-                  sellerName={card.seller ? card.seller.username : null}
+                  sellerName={card.sellerUsername}
                   Description={card.description}
                   />
               </Link>

@@ -1,3 +1,4 @@
+
 const {
   findProducts,
   findProduct,
@@ -8,12 +9,21 @@ exports.viewProduct = async (req, res, next) => {
   const { productId } = req.params;
 
   try {
-    const product = await findProduct(productId);
+    let product = await findProduct(productId);
     const sellerUsername = await findSellerUsername(product.seller);
     res.status(200).json({
       message: "Product Details Fetched Successfuly.",
-      product,
-      sellerUsername: sellerUsername,
+      product: {
+        _id: product._id,
+        name: product.name,
+        imageUrl: product.imageUrl,
+        sellerId: product.seller,
+        sellerUsername: sellerUsername,
+        price: product.price,
+        availableQuantity: product.availableQuantity,
+        description: product.description,
+        category: product.category,
+      },
     });
   } catch (err) {
     if (!err.status) {
@@ -27,12 +37,19 @@ exports.viewProducts = async (req, res, next) => {
   try {
     const products = await findProducts();
     let productsWithSellerUsername = [];
-    for (const product of products) {
+    for (let product of products) {
+      console.log(product);
       const sellerUsername = await findSellerUsername(product.seller);
-
       productsWithSellerUsername.push({
-        product: product,
+        _id: product._id,
+        name: product.name,
+        imageUrl: product.imageUrl,
+        sellerId: product.seller,
         sellerUsername: sellerUsername,
+        price: product.price,
+        availableQuantity: product.availableQuantity,
+        description: product.description,
+        category: product.category,
       });
     }
     res.status(200).json({

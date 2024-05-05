@@ -89,7 +89,7 @@ export default function Product(props) {
                                 <hr></hr>
                             </div>
                             <div className = "SQP">
-                                {userType == "customer" && <p className = "product-seller">Seller: {product.seller ? product.seller.username : null}</p>}
+                                {userType == "customer" && <p className = "product-seller">Seller: {sellerUsername}</p>}
                                 <p className = "product-quantity">Available quantity: {product.availableQuantity}</p>
                                 <p className = "product-price">Price: {product.price} EGP</p>
                             </div>
