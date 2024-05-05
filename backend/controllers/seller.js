@@ -11,12 +11,11 @@ exports.addProduct = async (req, res, next) => {
     checkValidation(errors);
     const user = await findSeller(req.userId);
 
-    // if (!req.file) {
-    //   const error = new Error("Please Add An Image File.");
-    //   error.status = 422;
-    //   throw error;
-    // }
-    // const imageUrl = req.file.path;
+    if (!req.file) {
+      const error = new Error("Please Add An Image File.");
+      error.status = 422;
+      throw error;
+    }
 
     const result = await createProduct(req);
 

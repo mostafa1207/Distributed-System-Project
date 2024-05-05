@@ -100,6 +100,7 @@ createUserWithId = async function (req, hashedPassword) {
 
 createProduct = async function (req) {
   const { userId } = req;
+  const imageUrl = req.file.path;
   const { name, description, price, availableQuantity, category } = req.body;
 
   const product = new Product({
@@ -109,7 +110,7 @@ createProduct = async function (req) {
     availableQuantity,
     category,
     seller: userId,
-    // imageUrl: "url",
+    imageUrl,
   });
   return await product.save();
 };

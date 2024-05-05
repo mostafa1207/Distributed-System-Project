@@ -23,10 +23,10 @@ const ProductsSchema = new Schema(
       type: Number,
       reqiured: true,
     },
-    // imageUrl: {
-    //   type: String,
-    //   reqiured: true,
-    // },
+    imageUrl: {
+      type: String,
+      reqiured: true,
+    },
     category: {
       type: [String],
       reqiured: true,

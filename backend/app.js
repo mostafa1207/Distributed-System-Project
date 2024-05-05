@@ -11,21 +11,21 @@ const customerRoutes = require("./routes/customer");
 const guestRoutes = require("./routes/guest");
 const cors = require("./middlewares/CORS");
 const errorHandler = require("./middlewares/error-handler");
-//const resourceNotFoundHandler = require("./middlewares/notfound");
-//const { storage } = require("./utilities/image-upload");
+const resourceNotFoundHandler = require("./middlewares/notfound");
+const { storage } = require("./utilities/image-upload");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(multer({ storage }).single("image"));
-//app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(multer({ storage }).single("image"));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(cors);
 app.use("/auth", authRoutes);
 app.use("/seller", sellerRoutes);
 app.use("/customer", customerRoutes);
 app.use("/guest", guestRoutes);
 app.use(userRoutes);
-//app.use(resourceNotFoundHandler);
+app.use(resourceNotFoundHandler);
 app.use(errorHandler);
 mongoose
   .connect(
