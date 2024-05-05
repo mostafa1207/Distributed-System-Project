@@ -16,14 +16,16 @@ function UpdateUserForm() {
 
   if (isLoading) return <Spinner />;
 
-  function handleUpdate(e, field) {
-    const { value } = e.target;
+  // function handleUpdate(e, field) {
+  //   const { value } = e.target;
 
-    if (!value) return;
-    updateUser({ [field]: value });
+  //   if (!value) return;
+  //   updateUser({ [field]: value });
+  // }
+
+  function onSubmit(data) {
+    updateUser(data);
   }
-
-  function onSubmit() {}
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -34,7 +36,7 @@ function UpdateUserForm() {
           defaultValue={username}
           disabled={isUpdating}
           {...register("user-name")}
-          onBlur={(e) => handleUpdate(e, "username")}
+          // onBlur={(e) => handleUpdate(e, "username")}
         />
       </FormRow>
 
@@ -45,7 +47,7 @@ function UpdateUserForm() {
           defaultValue={city}
           disabled={isUpdating}
           {...register("user-city")}
-          onBlur={(e) => handleUpdate(e, "city")}
+          // onBlur={(e) => handleUpdate(e, "city")}
         />
       </FormRow>
 
@@ -56,7 +58,7 @@ function UpdateUserForm() {
           defaultValue={address}
           disabled={isUpdating}
           {...register("user-address")}
-          onBlur={(e) => handleUpdate(e, "address")}
+          // onBlur={(e) => handleUpdate(e, "address")}
         />
       </FormRow>
 
@@ -67,7 +69,7 @@ function UpdateUserForm() {
           defaultValue={phone}
           disabled={isUpdating}
           {...register("phone-number")}
-          onBlur={(e) => handleUpdate(e, "phone")}
+          // onBlur={(e) => handleUpdate(e, "phone")}
         />
       </FormRow>
       <FormRow>
