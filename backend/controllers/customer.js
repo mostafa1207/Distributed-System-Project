@@ -4,6 +4,7 @@ const {
   findCustomer,
   findProduct,
   findUserInDeliveries,
+  findSellerInFinance,
 } = require("../utilities/find");
 const { updateCart } = require("../utilities/update");
 const { createDeliveryInfo } = require("../utilities/create");
@@ -12,12 +13,19 @@ const { createSellerFinanceInfo } = require("../utilities/create");
 exports.addToCart = async (req, res, next) => {
   try {
     const { productId } = req.params;
+    const { quantity } = req.body;
     const user = await findCustomer(req.userId);
     const product = await findProduct(productId);
 
-    if (product.availableQuantity == 0) {
+    if (!quantity) {
       res.status(400).json({
-        message: "This product has no available quantity.",
+        message: "Please add available quantity.",
+      });
+    }
+
+    if (product.availableQuantity < quantity) {
+      res.status(400).json({
+        message: `This product has only ${product.availableQuantity}.`,
       });
     } else {
       await updateCart(req, user);
@@ -53,6 +61,7 @@ exports.changeQuantity = async (req, res, next) => {
         await user.save();
         res.status(200).json({
           message: "Product removed successfuly.",
+          user,
         });
       } else {
         product.quantity = quantity;
@@ -108,15 +117,6 @@ exports.checkout = async (req, res, next) => {
       deliveryInfo = await createDeliveryInfo(userId, address, phone);
     }
 
-    // let financeInfo = await findUserInFinance(userId);
-    // if (!financeInfo) {
-    //   deliveryInfo = await createCustomerFinanceInfo(
-    //     userId,
-    //     cardNumber,
-    //     cardPin
-    //   );
-    // }
-
     let updatedCart = [];
     for (const cartProduct of user.cart) {
       const product = await findProduct(cartProduct.productId);
@@ -139,19 +139,19 @@ exports.checkout = async (req, res, next) => {
     user.cart = updatedCart;
     await user.save();
 
-    if (updateCart.length == cartLength) {
+    if (!updatedCart.length) {
+      res.status(200).json({
+        message: "You checkout successfuly.",
+      });
+    } else if (updatedCart.length == cartLength) {
       res.status(200).json({
         message:
           "products in your cart are not available for these quantities.",
       });
-    } else if (updateCart.length < cartLength) {
+    } else if (updatedCart.length < cartLength) {
       res.status(200).json({
         message:
           "You checkout successfuly but some products in your cart are not available for these quantities.",
-      });
-    } else if (!updateCart.length) {
-      res.status(200).json({
-        message: "You checkout successfuly.",
       });
     }
   } catch (err) {

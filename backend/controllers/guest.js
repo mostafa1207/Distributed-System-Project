@@ -1,14 +1,11 @@
 const Product = require("../models/products");
-const { findProducts } = require("../utilities/find");
+const { findProduct, findProducts } = require("../utilities/find");
 
 exports.viewProduct = async (req, res, next) => {
   const { productId } = req.params;
 
   try {
-    const product = await Product.findById(productId).populate(
-      "seller",
-      "username"
-    );
+    const product = await findProduct(productId);
     res.status(200).json({
       message: "Product Details Fetched Successfuly.",
       product,
