@@ -57,7 +57,9 @@ exports.changeQuantity = async (req, res, next) => {
       });
     } else {
       if (quantity == 0) {
-        let productIndex = user.cart.findIndex((obj) => obj.productId == productId);
+        let productIndex = user.cart.findIndex(
+          (obj) => obj.productId == productId
+        );
         user.cart.splice(productIndex, 1);
         await user.save();
         res.status(200).json({

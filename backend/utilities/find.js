@@ -41,6 +41,18 @@ findSeller = async function (userId) {
   return user;
 };
 
+findSellerUsername = async function (userId) {
+  let user;
+  user = await CairoSeller.findById(userId);
+  if (!user) {
+    user = await AlexSeller.findById(userId);
+  }
+  if (!user) {
+    return "username not found";
+  }
+  return user.username;
+};
+
 findCustomer = async function (userId) {
   let user;
   user = await CairoCustomer.findById(userId);
@@ -129,4 +141,5 @@ module.exports = {
   findByEmailAndType,
   findUserInDeliveries,
   findSellerInFinance,
+  findSellerUsername,
 };
