@@ -21,10 +21,10 @@ export default function Home(props) {
       },
     });
     const data = await res.json();
-    let products = data.productWithSellerUsername;
+    let products = data.productsWithSellerUsername;
     if (userType == "seller") {
       const sellerID = Cookies.get("userID");
-      products = products.filter((product) => {return product.seller ? (product.seller._id == sellerID) : false });
+      products = products.filter((product) => product.sellerId == sellerID);
     }
     return products;
   }

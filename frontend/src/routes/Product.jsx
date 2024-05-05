@@ -89,7 +89,7 @@ export default function Product(props) {
                                 <hr></hr>
                             </div>
                             <div className = "SQP">
-                                {userType == "customer" && <p className = "product-seller">Seller: {product.seller ? product.seller.username : null}</p>}
+                                {userType == "customer" && <p className = "product-seller">Seller: {product.sellerUsername}</p>}
                                 <p className = "product-quantity">Available quantity: {product.availableQuantity}</p>
                                 <p className = "product-price">Price: {product.price} EGP</p>
                             </div>
@@ -110,7 +110,7 @@ export default function Product(props) {
                         </div>
                         <div className="bottom-section">
                             <h3>Categories</h3>
-                            <p>{product.category}</p>
+                            {product.category.map((category, index) => <p key={index}>{category}</p>)}
                         </div>
                         {userType == "seller" && <Button handler={handleDelete} isLoading={isSending} color="red" text="Delete product" icon={MdDelete}/>}
                     </div>
