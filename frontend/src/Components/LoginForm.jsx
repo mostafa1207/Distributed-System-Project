@@ -26,7 +26,6 @@ export default function LoginForm() {
         })
         .then((res) => res.json())
         .then((res) => {
-            console.log(res)
             if (res.message == "User Logged In Successfuly.") {
                 Cookies.set('token', res.token, { expires: 7, secure: true });
                 Cookies.set('tokenExpiryDate', res.tokenExpiryDate, {expires: 7, secure: true});
@@ -42,7 +41,7 @@ export default function LoginForm() {
                     setWrongLogin(res.message);
                 }
             }
-            setIsLoading(false);
+                        setIsLoading(false);
         });   
     }
 

@@ -17,8 +17,14 @@ exports.getUserProfile = async (req, res, next) => {
     if (deliveryInfo) {
       res.status(200).json({
         message: "User Found Succesfuly with delivery info",
-        user,
-        deliveryInfo,
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          city: user.city,
+          address: deliveryInfo.address,
+          phone: deliveryInfo.phone
+        },
       });
     } else {
       res.status(200).json({

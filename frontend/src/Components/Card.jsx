@@ -16,7 +16,7 @@ export const Card = ({
                         <h5 className="item-name">{itemName}</h5>
                         <h5 className="price">{price} EGP</h5>
                     </div>
-                    <h6 className="seller-name">Seller : sellerName</h6>
+                    <h6 className="seller-name">Seller : {sellerName}</h6>
                     <p className="description">Description: {Description}</p>
                 </div>
             </div>

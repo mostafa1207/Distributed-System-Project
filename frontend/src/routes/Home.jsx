@@ -1,18 +1,27 @@
 import { useOutletContext } from "react-router-dom";
 import CardCollection from '../Components/Collection';
 import { ChoiceBox } from '../Components/ChoiceBox';
-import { Card } from '../Components/Card';
 import Button from './../Components/Button'
-import { useEffect, useState } from "react";
 import Spinner from "./../ui/Spinner"
-import { useContext } from "react";
-import { ProductsContext } from "../context/ProductsContext";
 import { IoMdAdd } from "react-icons/io";
+import { useQuery } from "@tanstack/react-query";
+import { API_URL } from "../keys";
 
 export default function Home(props) {
 
+  const { data, status } = useQuery(["products"], fetchProducts);
   const userType = useOutletContext();
-  const { products, isFetching} = useContext(ProductsContext);
+  
+  async function fetchProducts() {
+    const res = await fetch(`${API_URL}/guest/products`, {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    return data.productWithSellerUsername;
+  }
 
   return (
     <>
@@ -24,7 +33,7 @@ export default function Home(props) {
             <ChoiceBox />
           }
         </div>
-        {isFetching ? <Spinner /> : <CardCollection cardData={products}/>}
+        {status != "success" ? <Spinner /> : <CardCollection cardData={data}/>}
       </div>
     </>
   );

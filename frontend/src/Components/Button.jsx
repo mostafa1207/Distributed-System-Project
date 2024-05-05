@@ -1,5 +1,6 @@
 import { styled, css } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import SpinnerMini from "../ui/SpinnerMini";
 
 export default function Button(props) {
     const nav = useNavigate();
@@ -21,6 +22,7 @@ export default function Button(props) {
         justify-content: center;
         align-items: center;
         gap: 1rem;
+        min-width: 15rem;
 
         ${(props) => {
             if (props.$color == "green") {
@@ -52,8 +54,12 @@ export default function Button(props) {
     return (
         <>
             <Button type={props.type} onClick={handler} $color={props.color}>
-                {props.icon && <props.icon />}
-                {props.text}
+                {props.isLoading ? <SpinnerMini /> :
+                <>
+                    {props.icon && <props.icon />}
+                    {props.text}
+                </>
+                }
             </Button>
         </>
     );
