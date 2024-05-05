@@ -7,6 +7,7 @@ import Spinner from "../../ui/Spinner";
 import { useUserData } from "./useUserData";
 import { useUpdateUser } from "./useUpdateUser";
 import Button from "../../ui/Button";
+import toast from "react-hot-toast";
 
 function UpdateUserForm() {
   const { register, handleSubmit } = useForm();
@@ -16,64 +17,67 @@ function UpdateUserForm() {
 
   if (isLoading) return <Spinner />;
 
-  function handleUpdate(e, field) {
-    const { value } = e.target;
+  // function handleUpdate(e, field) {
+  //   const { value } = e.target;
 
-    if (!value) return;
-    updateUser({ [field]: value });
+  //   if (!value) return;
+  //   updateUser({ [field]: value });
+  // }
+
+  function onSubmit(data) {
+    if (data.phone.length != 11) {
+      toast.error("please input a valid phone number");
+      return;
+    }
+    updateUser(data);
   }
-
-  function onSubmit() {}
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Username">
         <Input
           type="string"
-          id="user-name"
+          id="username"
           defaultValue={username}
           disabled={isUpdating}
-          {...register("user-name")}
-          onBlur={(e) => handleUpdate(e, "username")}
+          {...register("username")}
+          // onBlur={(e) => handleUpdate(e, "username")}
         />
       </FormRow>
 
       <FormRow label="City">
         <Input
           type="string"
-          id="user-city"
+          id="city"
           defaultValue={city}
           disabled={isUpdating}
-          {...register("user-city")}
-          onBlur={(e) => handleUpdate(e, "city")}
+          {...register("city")}
+          // onBlur={(e) => handleUpdate(e, "city")}
         />
       </FormRow>
 
       <FormRow label="Address">
         <Input
           type="string"
-          id="user-address"
+          id="address"
           defaultValue={address}
           disabled={isUpdating}
-          {...register("user-address")}
-          onBlur={(e) => handleUpdate(e, "address")}
+          {...register("address")}
+          // onBlur={(e) => handleUpdate(e, "address")}
         />
       </FormRow>
 
       <FormRow label="Phone No.">
         <Input
           type="number"
-          id="phone-number"
+          id="phone"
           defaultValue={phone}
           disabled={isUpdating}
-          {...register("phone-number")}
-          onBlur={(e) => handleUpdate(e, "phone")}
+          {...register("phone")}
+          // onBlur={(e) => handleUpdate(e, "phone")}
         />
       </FormRow>
       <FormRow>
-        <Button variation="secondary" type="reset">
-          Submit
-        </Button>
         <Button disabled={isUpdating}>Edit User</Button>
       </FormRow>
     </Form>

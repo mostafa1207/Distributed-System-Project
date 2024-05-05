@@ -5,6 +5,7 @@ import { useState } from "react";
 import SpinnerMini from "./../ui/SpinnerMini"
 
 export default function SignupForm() {
+
     const nav = useNavigate();
     const [wrongSignup , setWrongSignup] = useState("");
     const [isLoading , setIsLoading] = useState(false);
@@ -31,6 +32,7 @@ export default function SignupForm() {
         .then((res) => res.json())
         .then((res) => {
             if (res.message == "User Created Successfuly.") {
+                Cookies.set('userID', res.user._id, { expires: 7, secure: true });
                 Cookies.set('token', res.token, { expires: 7, secure: true });
                 Cookies.set('tokenExpiryDate', res.tokenExpiryDate, {expires: 7, secure: true});
                 if (user["userType"] == "customer") {

@@ -43,7 +43,7 @@ export default function Base(props) {
     align-items: center;
     padding: 1rem 2rem;
     font-size: 2rem;
-    box-shadow: 0 4px 8px 0 var(--color-grey-300);
+    box-shadow: 0 2px 4px 0 var(--color-grey-300);
     width: 100%;
     gap: 1rem
   `

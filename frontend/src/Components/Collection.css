@@ -44,3 +44,11 @@
     display: flex;
     align-self: flex-start;
 }
+
+.no-products {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
