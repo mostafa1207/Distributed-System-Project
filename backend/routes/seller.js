@@ -42,10 +42,30 @@ router.post(
       })
       .withMessage("Enter available Quantity,Only Numbers are accepted"),
     body("category")
-      .trim()
-      .isString()
-      .isLength({ min: 5, max: 60 })
-      .withMessage("Enter Category of product"),
+      .custom((categories) => {
+        if (typeof categories === "string") {
+          if (categories.length < 5 || categories.length > 60) {
+            throw new Error(
+              "Please enter a valid category length between 5 and 60 characters"
+            );
+          }
+        } else if (Array.isArray(categories)) {
+          for (const category of categories) {
+            if (typeof category !== "string") {
+              throw new Error("Please enter a valid category type (string)");
+            }
+            if (category.length < 5 || category.length > 60) {
+              throw new Error(
+                "Please enter a valid category length between 5 and 60 characters"
+              );
+            }
+          }
+        } else {
+          throw new Error("Category must be either a string or an array");
+        }
+        return true;
+      })
+      .withMessage("Enter valid category for the product"),
   ],
   sellerController.addProduct
 );

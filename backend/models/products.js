@@ -28,7 +28,7 @@ const ProductsSchema = new Schema(
       // reqiured: true,
     },
     category: {
-      type: String,
+      type: [String],
       reqiured: true,
     },
   },
