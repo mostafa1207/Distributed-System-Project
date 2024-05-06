@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DarkModeToggle from "../ui/DarkModeToggle";
-import { FiLogOut } from 'react-icons/fi'
+import { FiLogOut } from "react-icons/fi";
 import { RiAccountCircleLine, RiShoppingCart2Fill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 export default function Base(props) {
   const nav = useNavigate();
   const route = useLocation().pathname.split("/")[1];
-  const [ keyword, setKeyword ] = useState(null);
+  const [keyword, setKeyword] = useState(null);
 
   useEffect(() => {
     if (route == "user" || route == "store") {
-      if(Cookies.get('token') == undefined || Cookies.get('tokenExpiryDate') < Date.now()) {
-        nav('/login')
+      if (
+        Cookies.get("token") == undefined ||
+        Cookies.get("tokenExpiryDate") < Date.now()
+      ) {
+        nav("/login");
       }
     }
   });
@@ -27,17 +30,20 @@ export default function Base(props) {
       setKeyword(entry[1]);
     }
     event.target.reset();
-    nav((route == "product") ? "/" : `/${route}`)
-  }
+    nav(route == "product" ? "/" : `/${route}`);
+  };
 
   const Body = styled.div`
-    background: linear-gradient(var(--color-grey-100) 0%, var(--color-grey-50) 100%);
+    background: linear-gradient(
+      var(--color-grey-100) 0%,
+      var(--color-grey-50) 100%
+    );
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-  `
+  `;
 
   const Nav = styled.nav`
     position: sticky;
@@ -51,8 +57,13 @@ export default function Base(props) {
     font-size: 2rem;
     box-shadow: 0 2px 4px 0 var(--color-grey-300);
     width: 100%;
-    gap: 1rem
-  `
+    gap: 1rem;
+
+    img {
+      margin-top: 5px;
+      width: 50px;
+    }
+  `;
 
   const NavButton = styled(Link)`
     display: flex;
@@ -67,13 +78,13 @@ export default function Base(props) {
       color: var(--color-blue-700);
       text-decoration: underline;
     }
-  `
+  `;
   const NavButtonsContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
     margin-right: 2rem;
-  `
+  `;
 
   const Search = styled.form`
     display: flex;
@@ -84,45 +95,58 @@ export default function Base(props) {
     padding: 0 2rem 0 0;
     flex-grow: 1;
     max-width: 55rem;
-    
-    & input, & input:focus {
+
+    & input,
+    & input:focus {
       background-color: var(--color-grey-200);
       border-radius: 50px;
       flex-grow: 1;
       border: none;
       outline: none;
-      padding: 0.6rem 0.6rem 0.6rem 2.2rem;  
+      padding: 0.6rem 0.6rem 0.6rem 2.2rem;
     }
 
     & input::placeholder {
       color: var(--color-grey-500);
     }
-  `
+  `;
 
   return (
     <>
       <Body>
         <Nav>
           <div className="logo">
-            <Link onClick={() => {setKeyword(null)}} to={(route == "product") ? "/" : `/${route}`}>LOGO</Link>
+            <Link
+              onClick={() => {
+                setKeyword(null);
+              }}
+              to={route == "product" ? "/" : `/${route}`}
+            >
+              <img src="../../assets/logo.jpg"></img>
+            </Link>
           </div>
           <Search onSubmit={handleSearch}>
-            <input type="text" name="keyword"
-              placeholder={props.userType == "seller"
-                ? "Search your products"
-                : "What are you looking for?"} />
-            
+            <input
+              type="text"
+              name="keyword"
+              placeholder={
+                props.userType == "seller"
+                  ? "Search your products"
+                  : "What are you looking for?"
+              }
+            />
+
             <FaSearch />
           </Search>
-          {props.userType == "customer" || props.userType == "seller" ?
+          {props.userType == "customer" || props.userType == "seller" ? (
             <NavButtonsContainer>
               <DarkModeToggle></DarkModeToggle>
-              {props.userType == "customer" &&
+              {props.userType == "customer" && (
                 <NavButton to={"cart"}>
                   <RiShoppingCart2Fill />
                   Cart
                 </NavButton>
-              }
+              )}
               <NavButton to="profile">
                 <RiAccountCircleLine />
                 Profile
@@ -132,21 +156,17 @@ export default function Base(props) {
                 Logout
               </NavButton>
             </NavButtonsContainer>
-          :
+          ) : (
             <NavButtonsContainer>
               <DarkModeToggle></DarkModeToggle>
-              <NavButton to="/login">
-                Login
-              </NavButton>
-              <NavButton to="/signup">
-                Signup
-              </NavButton>
+              <NavButton to="/login">Login</NavButton>
+              <NavButton to="/signup">Signup</NavButton>
             </NavButtonsContainer>
-          }
+          )}
         </Nav>
-        
-        <Outlet context={{ userType: props.userType, keyword}} />
-        
+
+        <Outlet context={{ userType: props.userType, keyword }} />
+
         <footer></footer>
       </Body>
     </>
