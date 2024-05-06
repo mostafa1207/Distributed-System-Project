@@ -1,0 +1,11 @@
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    min-width: 50rem;
+    padding: 6rem 1rem;
+
+    & button:last-child {
+        align-self: start;
+    }
+}

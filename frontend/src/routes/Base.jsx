@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DarkModeToggle from "../ui/DarkModeToggle";
@@ -10,6 +10,7 @@ import Cookies from "js-cookie"
 export default function Base(props) {
   const nav = useNavigate();
   const route = useLocation().pathname.split("/")[1];
+  const [ keyword, setKeyword ] = useState(null);
 
   useEffect(() => {
     if (route == "user" || route == "store") {
@@ -21,7 +22,12 @@ export default function Base(props) {
 
   const handleSearch = (event) => {
     event.preventDefault();
+    const form = new FormData(event.target);
+    for (let entry of form.entries()) {
+      setKeyword(entry[1]);
+    }
     event.target.reset();
+    nav((route == "product") ? "/" : `/${route}`)
   }
 
   const Body = styled.div`
@@ -98,10 +104,10 @@ export default function Base(props) {
       <Body>
         <Nav>
           <div className="logo">
-            <Link to={(route == "product") ? "/" : `/${route}`}>LOGO</Link>
+            <Link onClick={() => {setKeyword(null)}} to={(route == "product") ? "/" : `/${route}`}>LOGO</Link>
           </div>
           <Search onSubmit={handleSearch}>
-            <input type="text" 
+            <input type="text" name="keyword"
               placeholder={props.userType == "seller"
                 ? "Search your products"
                 : "What are you looking for?"} />
@@ -139,7 +145,7 @@ export default function Base(props) {
           }
         </Nav>
         
-        <Outlet context={props.userType} />
+        <Outlet context={{ userType: props.userType, keyword}} />
         
         <footer></footer>
       </Body>

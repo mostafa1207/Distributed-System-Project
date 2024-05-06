@@ -11,7 +11,7 @@ exports.addProduct = async (req, res, next) => {
     checkValidation(errors);
     const user = await findSeller(req.userId);
 
-    if (!req.file) {
+    if (!req.body.file) {
       const error = new Error("Please Add An Image File.");
       error.status = 422;
       throw error;

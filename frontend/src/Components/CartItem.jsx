@@ -7,9 +7,11 @@ const CartItem = ({ item, updateTotal, deleteItem, changeAmount }) => {
     const [waitForDelete, setWaitForDelete] = useState(false);
 
     const increaseQuantity = () => {
-        changeAmount({ productId: item._id, quantity: quantity + 1 });
-        setQuantity(quantity + 1);
-        updateTotal(item.price);
+        if (quantity < item.availableQuantity) {
+            changeAmount({ productId: item._id, quantity: quantity + 1 });
+            setQuantity(quantity + 1);
+            updateTotal(item.price);
+        }
     };
 
     const decreaseQuantity = () => {
@@ -36,7 +38,7 @@ const CartItem = ({ item, updateTotal, deleteItem, changeAmount }) => {
                 <div className="item-info">
                     <div>
                         <p className="cart-item-name">{item.name}</p>
-                        <p>Seller: {item.seller ? item.seller.username:null}</p>
+                        <p>Seller: {item.sellerUsername}</p>
                     </div>
                     <div className="quantity-button">
                         <span className="minus" onClick={decreaseQuantity}>-</span>

@@ -1,7 +1,7 @@
 import "./FormInput.css"
 
 export const FormInput = ({
-    label,placeholder,type,multiline,name,defaultValue
+    label,placeholder,type,multiline,name,defaultValue,onClick
 }
 ) =>{
     return (
@@ -19,7 +19,7 @@ export const FormInput = ({
             <div className="form-input-container">
                 <label htmlFor={label} className="form-input-label">{label}</label>
                 {type == "image" ? 
-                    <button className="form-input-input">Upload</button>
+                    <button type="button" onClick={onClick} className="form-input-input">Upload</button>
                 :
                     <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder} required/>
                 }

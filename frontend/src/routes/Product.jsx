@@ -18,7 +18,7 @@ export default function Product(props) {
     const queryClient = useQueryClient();
     const nav = useNavigate();
     const { productId } = useParams();
-    const userType = useOutletContext();
+    const { userType } = useOutletContext();
     const { data: product, status } = useQuery([`product_${productId}`], fetchProduct);
     const [ isSending, setIsSending ] = useState(false);
 

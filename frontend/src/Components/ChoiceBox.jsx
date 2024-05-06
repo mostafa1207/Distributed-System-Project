@@ -1,14 +1,16 @@
 import "./ChoiceBox.css"
-export const ChoiceBox = () =>{
+export const ChoiceBox = (props) =>{
     return (
         <>
-        <dev className="choiceboxcontainer">
+        <div className="choiceboxcontainer">
             <h5 className="sort-header">Sort by :</h5>
-            <select className="choiceBox" >
-                <option value="price">price</option>
-                <option value="Name">Name</option>
+            <select className="choiceBox" onChange={(event) => {props.handleSort(event.target.value)}}>
+                <option value="" selected hidden>none</option>
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+                <option value="seller">Seller</option>
             </select>
-        </dev>
+        </div>
         </>
     );
 }

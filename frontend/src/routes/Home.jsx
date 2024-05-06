@@ -7,11 +7,14 @@ import { IoMdAdd } from "react-icons/io";
 import { useQuery } from "@tanstack/react-query";
 import { API_URL } from "../keys";
 import Cookies from "js-cookie"
+import { useEffect, useState } from "react";
 
 export default function Home(props) {
 
-  const userType = useOutletContext();
+  const { userType, keyword } = useOutletContext();
   const { data, status } = useQuery(["products"], fetchProducts);
+  const [ products, setProducts ] = useState(null)
+  const [ sort, setSort ] = useState(null);
   
   async function fetchProducts() {
     const res = await fetch(`${API_URL}/guest/products`, {
@@ -29,6 +32,30 @@ export default function Home(props) {
     return products;
   }
 
+  useEffect(() => {
+    if (status == "success") {
+      let filteredProducts = JSON.parse(JSON.stringify(data))
+      if (keyword) {
+        filteredProducts = filteredProducts.filter((product) => {
+          let productName = product.name.toLowerCase();
+          return productName.includes(keyword.toLowerCase());
+        });
+      }
+      let sortedProducts;
+      if (sort == "price") {
+        sortedProducts = filteredProducts.sort((a, b) => (a.price < b.price ? -1 : 1));
+      } else if (sort == "name") {
+        sortedProducts = filteredProducts.sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
+      } else if (sort == "seller") {
+        sortedProducts = filteredProducts.sort((a, b) => (a.sellerUsername.toLowerCase() < b.sellerUsername.toLowerCase() ? -1 : 1));
+      } else {
+        sortedProducts = filteredProducts;
+      }
+      setProducts(sortedProducts)
+
+    }
+  }, [data, keyword, sort])
+
   return (
     <>
       <div className="main-container">
@@ -36,10 +63,10 @@ export default function Home(props) {
           {userType == "seller"? 
             <Button icon={IoMdAdd} text="Add Product" color="green" path="add"/>
             :
-            <ChoiceBox />
+            <ChoiceBox handleSort={setSort}/>
           }
         </div>
-        {status != "success" ? <Spinner /> : <CardCollection cardData={data}/>}
+        {!products ? <Spinner /> : <CardCollection cardData={products}/>}
       </div>
     </>
   );

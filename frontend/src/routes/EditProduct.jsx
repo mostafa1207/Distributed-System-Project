@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { FormInput } from "../Components/FormInput";
 import Button from "../Components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -10,7 +9,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from "react-hot-toast";
 import Spinner from "../ui/Spinner";
 import Cookies from "js-cookie"
-
+import "./EditProduct.css"
 
 export default function EditProduct(props) {
 
@@ -56,6 +55,10 @@ export default function EditProduct(props) {
             } else {
                 product[entry[0]] = entry[1];
             }
+        }
+        if (!product.file.name && props.editOrAdd == "add") {
+            toast.error("please choose an image");
+            return;
         }
         setIsLoading(true)
         if (props.editOrAdd == "edit") {    
@@ -107,38 +110,31 @@ export default function EditProduct(props) {
         setProductData(product);
     }
 
-    const Container = styled.form`
-        display: flex;
-        flex-direction: column;
-        gap: 1.8rem;
-        min-width: 50rem;
-        padding: 6rem 1rem;
-
-        & button:last-child {
-            align-self: ${props.editOrAdd == "edit" ? "start" : "end"};
-        }
-    `
+    const handleUploadImage = (event) => {
+        document.getElementById("selectedFile").click();
+    }
 
     return (
         <>
         {((status != "success" || productData.unset) && props.editOrAdd == "edit") ? <Spinner /> :
-            <Container onSubmit={handleSubmit}>
+            <form className="product-form" onSubmit={handleSubmit}>
                 <FormInput label="Product Name" name="name" defaultValue={productData.name} placeholder="Enter the name of the product" type="text" multiline={true}></FormInput>
                 <FormInput label="Description" name="description" defaultValue={productData.description} placeholder="Enter details about the product" type="paragraph" multiline={true}></FormInput>
                 <FormInput label="Price (EGP)" name="price" defaultValue={productData.price} placeholder="0" type="number"></FormInput>
                 <FormInput label="Quantity" name="availableQuantity" defaultValue={productData.availableQuantity} placeholder="0" type="number"></FormInput>
-                <FormInput label="Upload an image" placeholder="2000" type="image"></FormInput>
+                <input type="file" name="file" id="selectedFile" accept="image/*" style={{display: "none"}}/>
+                <FormInput label="Upload an image" placeholder="2000" type="image" onClick={handleUploadImage}></FormInput>
                 <label className="form-input-label">Categories</label>
                 {productData.category.map((value, index) => {
                     return <input key={index} type="text" id={`category_${index}`} defaultValue={value} name={`category_${index}`} className="form-input-input" placeholder="Category" required/>
                 })}
                 <button className="form-input-input" onClick={addCategory}>Add Category</button>
                 {props.editOrAdd == "edit" ? 
-                    <Button isLoading={isLoading} text="Save changes" color="green" icon={MdOutlineDownloadDone}></Button>
+                    <Button isLoading={isLoading} type="submit" text="Save changes" color="green" icon={MdOutlineDownloadDone}></Button>
                     :
                     <Button isLoading={isLoading} type="submit" text="Add Product" color="green" icon={IoMdAdd}></Button>
                 }
-            </Container>
+            </form>
         }
         </>
     );
