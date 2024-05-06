@@ -58,6 +58,11 @@ export default function Base(props) {
     box-shadow: 0 2px 4px 0 var(--color-grey-300);
     width: 100%;
     gap: 1rem;
+
+    img {
+      margin-top: 5px;
+      width: 50px;
+    }
   `;
 
   const NavButton = styled(Link)`
@@ -117,7 +122,7 @@ export default function Base(props) {
               }}
               to={route == "product" ? "/" : `/${route}`}
             >
-              <img src="../../../assets/logo.png"></img>
+              <img src="../../assets/logo.jpg"></img>
             </Link>
           </div>
           <Search onSubmit={handleSearch}>
