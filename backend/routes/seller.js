@@ -11,7 +11,7 @@ router.post(
   [
     body("name")
       .trim()
-      .isLength({ min: 5, max: 50 })
+      .isLength({ min: 3, max: 50 })
       .isString()
       .withMessage(
         "Please enter a valid product name between 5 and 40 characters"
@@ -19,7 +19,7 @@ router.post(
     body("description")
       .trim()
       .isString()
-      .isLength({ min: 10, max: 200 })
+      .isLength({ min: 5, max: 200 })
       .withMessage("Enter Description that describes this product"),
     body("price")
       .trim()
@@ -44,9 +44,9 @@ router.post(
     body("category")
       .custom((categories) => {
         if (typeof categories === "string") {
-          if (categories.length < 5 || categories.length > 60) {
+          if (categories.length < 2 || categories.length > 60) {
             throw new Error(
-              "Please enter a valid category length between 5 and 60 characters"
+              "Please enter a valid category length between 2 and 60 characters"
             );
           }
         } else if (Array.isArray(categories)) {
@@ -54,9 +54,9 @@ router.post(
             if (typeof category !== "string") {
               throw new Error("Please enter a valid category type (string)");
             }
-            if (category.length < 5 || category.length > 60) {
+            if (category.length < 2 || category.length > 60) {
               throw new Error(
-                "Please enter a valid category length between 5 and 60 characters"
+                "Please enter a valid category length between 2 and 60 characters"
               );
             }
           }
@@ -75,15 +75,15 @@ router.put(
   [
     body("name")
       .trim()
-      .isLength({ min: 5, max: 50 })
+      .isLength({ min: 3, max: 50 })
       .isString()
       .withMessage(
-        "Please enter a valid product name between 5 and 40 characters"
+        "Please enter a valid product name between 3 and 40 characters"
       ),
     body("description")
       .trim()
       .isString()
-      .isLength({ min: 10, max: 200 })
+      .isLength({ min: 5, max: 200 })
       .withMessage("Enter Description that describes this product"),
     body("price")
       .trim()
@@ -108,9 +108,9 @@ router.put(
       body("category")
       .custom((categories) => {
         if (typeof categories === "string") {
-          if (categories.length < 5 || categories.length > 60) {
+          if (categories.length < 2 || categories.length > 60) {
             throw new Error(
-              "Please enter a valid category length between 5 and 60 characters"
+              "Please enter a valid category length between 2 and 60 characters"
             );
           }
         } else if (Array.isArray(categories)) {
@@ -118,9 +118,9 @@ router.put(
             if (typeof category !== "string") {
               throw new Error("Please enter a valid category type (string)");
             }
-            if (category.length < 5 || category.length > 60) {
+            if (category.length < 2 || category.length > 60) {
               throw new Error(
-                "Please enter a valid category length between 5 and 60 characters"
+                "Please enter a valid category length between 2 and 60 characters"
               );
             }
           }

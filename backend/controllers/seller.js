@@ -4,6 +4,7 @@ const { findSeller, findProduct } = require("../utilities/find");
 const { deleteProduct } = require("../utilities/delete");
 const { checkAuth, checkValidation } = require("../utilities/check");
 const { createProduct } = require("../utilities/create");
+const fileDeleter=require('../utilities/file-deleter')
 
 exports.addProduct = async (req, res, next) => {
   const errors = validationResult(req);
@@ -40,7 +41,7 @@ exports.deleteProduct = async (req, res, next) => {
     const user = await findSeller(userId);
     const product = await findProduct(productId);
     checkAuth(product.seller.toString(), userId);
-
+fileDeleter(product.imageUrl)
     await deleteProduct(productId);
     res.status(200).json({
       message: "Product Deleted Successfuly.",
@@ -73,10 +74,12 @@ exports.editProduct = async (req, res, next) => {
     checkAuth(product.seller.toString(), userId);
 
     //checking that ImageURL field is not empty
-    // if (req.file != undefined) {
-    //   const imageUrl = req.file.path;
-    //   product.imageUrl = imageUrl;
-    // }
+    if (req.file) {
+      const imageUrl = req.file.path.replace(/\\/g, '/');;
+      fileDeleter(product.imageUrl)
+      product.imageUrl = imageUrl;
+
+    }
 
     //assignning req body to Product attribute
     product.name = name;

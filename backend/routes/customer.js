@@ -62,6 +62,7 @@ router.post(
   ],
   customerController.checkout
 );
-// router.get('/orders', isAuth, customerController.viewOrders);
+router.get('/orders', isAuth, customerController.viewOrders);
+
 
 module.exports = router;

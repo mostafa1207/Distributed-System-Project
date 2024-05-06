@@ -9,7 +9,7 @@ const {
 const { updateCart } = require("../utilities/update");
 const { createDeliveryInfo } = require("../utilities/create");
 const { createSellerFinanceInfo } = require("../utilities/create");
-
+const Order=require('../models/orders')
 exports.addToCart = async (req, res, next) => {
   try {
     const { productId } = req.params;
@@ -119,11 +119,18 @@ exports.checkout = async (req, res, next) => {
     if (!deliveryInfo) {
       deliveryInfo = await createDeliveryInfo(userId, address, phone);
     }
-
+const order=new Order({
+  userId:user._id,
+  orderProducts:[]
+})
     let updatedCart = [];
     for (const cartProduct of user.cart) {
       const product = await findProduct(cartProduct.productId);
       if (product.availableQuantity >= cartProduct.quantity) {
+        order.orderProducts.push({
+          quantity:cartProduct.quantity,
+          productId:product._id
+        })
         const seller = await findSeller(product.seller);
         let sellerFinanceInfo = await findSellerInFinance(product.seller);
         if (!sellerFinanceInfo) {
@@ -139,6 +146,7 @@ exports.checkout = async (req, res, next) => {
         updatedCart.push(cartProduct);
       }
     }
+    await order.save()
     user.cart = updatedCart;
     await user.save();
 
@@ -164,3 +172,27 @@ exports.checkout = async (req, res, next) => {
     next(err);
   }
 };
+exports.viewOrders=async(req,res,next)=>{
+  const { userId } = req;
+  try{ 
+    const user = await findCustomer(userId);
+const orders=await Order.find({userId:user._id}).populate('orderProducts.productId')
+if(!orders||!orders.length){
+  return res.status(200).json({
+    message:'No Orders Found For Customer.',
+    orders:[]
+  })
+
+}
+return res.status(200).json({
+  message:'Orders Fetched Successfuly.',
+  orders
+})
+
+  }catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+}

@@ -11,7 +11,7 @@ router.post(
     body("username")
       .trim()
       .isLength({ min: 3, max: 25 })
-      .isAlphanumeric()
+      .isString()
       .withMessage(
         "please enter a valid username between 5 and 25 characters with no spaces and only numbers and alphabetic characters"
       ),
@@ -30,9 +30,9 @@ router.post(
     body("password")
       .trim()
       .isString()
-      .isLength({ min: 10, max: 25 })
+      .isLength({ min: 5, max: 25 })
       .withMessage(
-        "please enter a valid password that is a string between 10 and 25 characters"
+        "please enter a valid password that is a string between 5 and 25 characters"
       ),
     body("email")
       .trim()
@@ -91,9 +91,9 @@ router.post(
     body("password")
       .trim()
       .isString()
-      .isLength({ min: 10, max: 25 })
+      .isLength({ min: 5, max: 25 })
       .withMessage(
-        "please enter a valid password that is a string between 10 and 25 characters"
+        "please enter a valid password that is a string between 5 and 25 characters"
       ),
     body("email")
       .trim()
