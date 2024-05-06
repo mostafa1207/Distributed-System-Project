@@ -62,6 +62,7 @@ export default function Base(props) {
     img {
       margin-top: 5px;
       width: 50px;
+      border-radius: 12px;
     }
   `;
 

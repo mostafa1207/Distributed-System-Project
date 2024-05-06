@@ -63,7 +63,7 @@ export default function Checkout(props) {
             return;
         }
         if (checkoutData.cardNumber.length != 16) {
-            toast.error("please input card number of 12 digits")
+            toast.error("please input card number of 16 digits")
             return;
         }
         if (checkoutData.cardPin.length != 4) {

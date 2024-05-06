@@ -11,7 +11,7 @@ export const Card = ({
     return (
         <>
             <div className="card-container">
-                <img src={`${API_URL}/images/${imgSrc}`} alt="Card Image"></img>
+                <img src={`../../assets/${imgSrc}`} alt="Card Image"></img>
                 <div className="card-text-container">
                     <div className="title-and-price">
                         <h5 className="item-name">{itemName}</h5>
