@@ -5,6 +5,7 @@ const { findUser, findUserInDeliveries } = require("../utilities/find");
 const { checkValidation } = require("../utilities/check");
 const { createDeliveryInfo } = require("../utilities/create");
 const DeliveryInfo = require("../models/deliveries");
+const FinanceInfo = require("../models/sellers-finance");
 
 exports.getUserProfile = async (req, res, next) => {
   const { userId } = req;
@@ -14,7 +15,23 @@ exports.getUserProfile = async (req, res, next) => {
     const deliveryInfo = await DeliveryInfo.findOne({
       customer: userId,
     });
-    if (deliveryInfo) {
+    const financeInfo = await FinanceInfo.findOne({
+      seller: userId,
+    });
+    if (deliveryInfo && financeInfo) {
+      res.status(200).json({
+        message: "User Found Succesfuly with delivery and finance info",
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          city: user.city,
+          address: deliveryInfo.address,
+          phone: deliveryInfo.phone,
+          balance: financeInfo.balance,
+        },
+      });
+    } else if (deliveryInfo) {
       res.status(200).json({
         message: "User Found Succesfuly with delivery info",
         user: {
@@ -23,7 +40,18 @@ exports.getUserProfile = async (req, res, next) => {
           email: user.email,
           city: user.city,
           address: deliveryInfo.address,
-          phone: deliveryInfo.phone
+          phone: deliveryInfo.phone,
+        },
+      });
+    } else if (financeInfo) {
+      res.status(200).json({
+        message: "User Found Succesfuly with finance info",
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          city: user.city,
+          balance: financeInfo.balance,
         },
       });
     } else {

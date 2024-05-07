@@ -121,6 +121,7 @@ exports.checkout = async (req, res, next) => {
     }
 const order=new Order({
   userId:user._id,
+  address,
   orderProducts:[]
 })
     let updatedCart = [];

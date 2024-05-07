@@ -12,12 +12,6 @@ exports.addProduct = async (req, res, next) => {
     checkValidation(errors);
     const user = await findSeller(req.userId);
 
-    if (!req.body.file) {
-      const error = new Error("Please Add An Image File.");
-      error.status = 422;
-      throw error;
-    }
-
     const result = await createProduct(req);
 
     res.status(201).json({
@@ -41,7 +35,7 @@ exports.deleteProduct = async (req, res, next) => {
     const user = await findSeller(userId);
     const product = await findProduct(productId);
     checkAuth(product.seller.toString(), userId);
-fileDeleter(product.imageUrl)
+
     await deleteProduct(productId);
     res.status(200).json({
       message: "Product Deleted Successfuly.",
@@ -57,7 +51,7 @@ fileDeleter(product.imageUrl)
 exports.editProduct = async (req, res, next) => {
   const { userId } = req;
   const { productId } = req.params;
-  const { name, description, price, availableQuantity, category } = req.body;
+  const { name, description, price, availableQuantity, category, imageUrl } = req.body;
 
   const errors = validationResult(req);
   try {
@@ -73,13 +67,6 @@ exports.editProduct = async (req, res, next) => {
     //Checking if this product is authorized to current seller
     checkAuth(product.seller.toString(), userId);
 
-    //checking that ImageURL field is not empty
-    if (req.file) {
-      const imageUrl = req.file.path.replace(/\\/g, '/');;
-      fileDeleter(product.imageUrl)
-      product.imageUrl = imageUrl;
-
-    }
 
     //assignning req body to Product attribute
     product.name = name;
@@ -87,6 +74,7 @@ exports.editProduct = async (req, res, next) => {
     product.price = price;
     product.availableQuantity = availableQuantity;
     product.category = category;
+    product.imageUrl = imageUrl;
 
     const editedProduct = await product.save();
     res.status(200).json({
