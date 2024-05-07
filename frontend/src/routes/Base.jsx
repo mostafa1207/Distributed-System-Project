@@ -6,6 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { RiAccountCircleLine, RiShoppingCart2Fill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
 import Cookies from "js-cookie";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function Base(props) {
   const nav = useNavigate();
@@ -61,7 +62,7 @@ export default function Base(props) {
 
     img {
       margin-top: 5px;
-      width: 50px;
+      max-width: 8rem;
       border-radius: 12px;
     }
   `;
@@ -77,7 +78,6 @@ export default function Base(props) {
     &:hover {
       background-color: var(--color-grey-200);
       color: var(--color-blue-700);
-      text-decoration: underline;
     }
   `;
   const NavButtonsContainer = styled.div`
@@ -123,7 +123,7 @@ export default function Base(props) {
               }}
               to={route == "product" ? "/" : `/${route}`}
             >
-              <img src="../../assets/logo.jpg"></img>
+              <FaShoppingCart></FaShoppingCart>
             </Link>
           </div>
           <Search onSubmit={handleSearch}>
