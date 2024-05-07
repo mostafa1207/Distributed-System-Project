@@ -80,7 +80,7 @@ export default function Product(props) {
                 <div className="product-container">
                     <div className="top-container">
                         <div className="product-image">
-                            <img src={`../../assets/${product.imageUrl}`} alt="Product Image" />
+                            <img src={product.imageUrl} alt="Product Image" />
                         </div>
                         <div className="product-details">
                             {userType == "seller" && <Button path="edit" text="Edit product" icon={IoMdAdd} color="orange" />}

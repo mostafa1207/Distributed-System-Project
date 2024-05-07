@@ -56,10 +56,6 @@ export default function EditProduct(props) {
                 product[entry[0]] = entry[1];
             }
         }
-        if (!product.file.name && props.editOrAdd == "add") {
-            toast.error("please choose an image");
-            return;
-        }
         setIsLoading(true)
         if (props.editOrAdd == "edit") {    
             fetch(`${API_URL}/seller/product/${productId}`, {
@@ -110,10 +106,6 @@ export default function EditProduct(props) {
         setProductData(product);
     }
 
-    const handleUploadImage = (event) => {
-        document.getElementById("selectedFile").click();
-    }
-
     return (
         <>
         {((status != "success" || productData.unset) && props.editOrAdd == "edit") ? <Spinner /> :
@@ -122,8 +114,7 @@ export default function EditProduct(props) {
                 <FormInput label="Description" name="description" defaultValue={productData.description} placeholder="Enter details about the product" type="paragraph" multiline={true}></FormInput>
                 <FormInput label="Price (EGP)" name="price" defaultValue={productData.price} placeholder="0" type="number"></FormInput>
                 <FormInput label="Quantity" name="availableQuantity" defaultValue={productData.availableQuantity} placeholder="0" type="number"></FormInput>
-                <input type="file" name="file" id="selectedFile" accept="image/*" style={{display: "none"}}/>
-                <FormInput label="Upload an image" placeholder="2000" type="image" onClick={handleUploadImage}></FormInput>
+                <FormInput label="Photo URL" name="imageUrl" defaultValue={productData.imageUrl} placeholder="Enter a direct url to an image" type="text" multiline={true}></FormInput>
                 <label className="form-input-label">Categories</label>
                 {productData.category.map((value, index) => {
                     return <input key={index} type="text" id={`category_${index}`} defaultValue={value} name={`category_${index}`} className="form-input-input" placeholder="Category" required/>

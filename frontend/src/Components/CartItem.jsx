@@ -34,7 +34,7 @@ const CartItem = ({ item, updateTotal, deleteItem, changeAmount }) => {
     return (
         <div className="cart-item-row">
             <div className="right-details">
-                <img className="item-image" src={`../../assets/${item.imageUrl}`} alt="" />
+                <img className="item-image" src={item.imageUrl} alt="" />
                 <div className="item-info">
                     <div>
                         <p className="cart-item-name">{item.name}</p>
