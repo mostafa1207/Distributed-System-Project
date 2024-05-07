@@ -3,7 +3,7 @@
 
 This Project involves the creation of a distributed online software system with a focus on enhancing the online shopping experience. The system has essential functionalities such as user management, data handling, secure online payments, comprehensive search options, account information display, inventory management, and reporting capabilities. It utilizes REST web services for communication.The system relies on a distributed database model with optimized table partitioning to ensure seamless data distribution. Additionally, it provides an interface for external stores to integrate and sell products on the platform, reinforcing its scalability
 
-Deployed Website: [visit](http://localhost:5173/)
+Deployed Website: [visit]([http://localhost:5173/](https://e-commerce-distributed.netlify.app/))
 
 ## Features
 
