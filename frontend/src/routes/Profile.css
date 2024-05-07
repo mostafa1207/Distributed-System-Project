@@ -1,0 +1,7 @@
+.profile-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5rem;
+    padding: 5rem 2rem;
+}

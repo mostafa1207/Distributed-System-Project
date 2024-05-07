@@ -66,7 +66,7 @@ export default function Home(props) {
             <ChoiceBox handleSort={setSort}/>
           }
         </div>
-        {!products ? <Spinner /> : <CardCollection cardData={products}/>}
+        {!products ? <Spinner /> : <CardCollection userType={userType} cardData={products}/>}
       </div>
     </>
   );

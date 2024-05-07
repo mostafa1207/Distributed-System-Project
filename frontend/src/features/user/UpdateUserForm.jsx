@@ -8,22 +8,21 @@ import { useUserData } from "./useUserData";
 import { useUpdateUser } from "./useUpdateUser";
 import Button from "../../ui/Button";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
-function UpdateUserForm() {
+function UpdateUserForm(props) {
   const { register, handleSubmit } = useForm();
-  const { isLoading, user: { username, city, address, phone } = {} } =
+  const { isLoading, user: { username, city, address, phone, balance } = {} } =
     useUserData();
   const { isUpdating, updateUser } = useUpdateUser();
 
-  if (isLoading) return <Spinner />;
-
-  // function handleUpdate(e, field) {
-  //   const { value } = e.target;
-
-  //   if (!value) return;
-  //   updateUser({ [field]: value });
-  // }
-
+  
+  useEffect(() => {
+    if (!isLoading) {
+      props.setBalance(balance)
+    }
+  }, [isLoading])
+  
   function onSubmit(data) {
     if (data.phone.length != 11) {
       toast.error("please input a valid phone number");
@@ -32,6 +31,8 @@ function UpdateUserForm() {
     updateUser(data);
   }
 
+  if (isLoading) return <Spinner />;
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Username">

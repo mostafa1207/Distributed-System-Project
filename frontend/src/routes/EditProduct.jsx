@@ -110,14 +110,14 @@ export default function EditProduct(props) {
         <>
         {((status != "success" || productData.unset) && props.editOrAdd == "edit") ? <Spinner /> :
             <form className="product-form" onSubmit={handleSubmit}>
-                <FormInput label="Product Name" name="name" defaultValue={productData.name} placeholder="Enter the name of the product" type="text" multiline={true}></FormInput>
-                <FormInput label="Description" name="description" defaultValue={productData.description} placeholder="Enter details about the product" type="paragraph" multiline={true}></FormInput>
+                <FormInput label="Product Name" name="name" defaultValue={productData.name} placeholder="Enter the name of the product" type="text" multiline={true} minLength="5"></FormInput>
+                <FormInput label="Description" name="description" defaultValue={productData.description} placeholder="Enter details about the product" type="paragraph" multiline={true} minLength="10"></FormInput>
                 <FormInput label="Price (EGP)" name="price" defaultValue={productData.price} placeholder="0" type="number"></FormInput>
                 <FormInput label="Quantity" name="availableQuantity" defaultValue={productData.availableQuantity} placeholder="0" type="number"></FormInput>
                 <FormInput label="Photo URL" name="imageUrl" defaultValue={productData.imageUrl} placeholder="Enter a direct url to an image" type="text" multiline={true}></FormInput>
                 <label className="form-input-label">Categories</label>
                 {productData.category.map((value, index) => {
-                    return <input key={index} type="text" id={`category_${index}`} defaultValue={value} name={`category_${index}`} className="form-input-input" placeholder="Category" required/>
+                    return <input key={index} type="text" id={`category_${index}`} defaultValue={value} name={`category_${index}`} className="form-input-input" placeholder="Category" required minLength="5"/>
                 })}
                 <button className="form-input-input" onClick={addCategory}>Add Category</button>
                 {props.editOrAdd == "edit" ? 

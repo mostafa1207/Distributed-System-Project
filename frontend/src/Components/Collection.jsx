@@ -2,7 +2,7 @@ import { Card } from "../Components/Card";
 import { Link } from "react-router-dom";
 import "./Collection.css"
 
-const CardCollection = ({ cardData }) => {
+const CardCollection = ({ cardData, userType }) => {
   return (
     <>
       {cardData.length ?
@@ -23,7 +23,7 @@ const CardCollection = ({ cardData }) => {
         </div>
       :
         <div className="no-products">
-          You don't have any products yet.
+          {userType == "seller" ? "You don't have any products yet." : "There are no products to show."}
         </div>
       }
     </>

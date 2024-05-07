@@ -1,7 +1,7 @@
 import "./FormInput.css"
 
 export const FormInput = ({
-    label,placeholder,type,multiline,name,defaultValue,onClick
+    label,placeholder,type,multiline,name,defaultValue,onClick,minLength
 }
 ) =>{
     return (
@@ -10,9 +10,9 @@ export const FormInput = ({
                 <div className="form-input-container multiline">
                     <label htmlFor={label} className="form-input-label">{label}</label>
                     {type == "paragraph" ?
-                        <textarea className="form-input-input" rows="3" placeholder={placeholder} name={name} defaultValue={defaultValue} required></textarea>
+                        <textarea className="form-input-input" rows="3" placeholder={placeholder} name={name} defaultValue={defaultValue} minLength={minLength}required></textarea>
                     :
-                        <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder} required/>
+                        <input type={type} id={label} name={name} defaultValue={defaultValue} className="form-input-input" placeholder={placeholder} required minLength={minLength}/>
                     }
                 </div>
             :
